@@ -1,0 +1,21 @@
+all: \
+  iso/music/menu.xa \
+  iso/music/gamer.xa \
+  iso/music/va.xa \
+  iso/music/vb.xa \
+  iso/music/vc.xa \
+  iso/music/vd.xa
+
+# XA converts
+iso/music/%.xa: iso/music/%.mp3
+	tools/psxavenc/psxavenc -f 37800 -t xa -b 4 -c 2 -F 1 -C 0 $< $@
+iso/music/%.xa:
+	tools/xainterleave/xainterleave $@
+
+# XA interleaves
+iso/music/menu.xa: iso/music/freaky.xa iso/music/gameover.xa
+iso/music/gamer.xa: iso/music/intro.xa iso/music/breakfast.xa
+iso/music/va.xa: iso/music/vidyagaemsi.xa iso/music/vidyagaemsv.xa iso/music/sagei.xa iso/music/sagev.xa
+iso/music/vb.xa: iso/music/harmonyi.xa iso/music/harmonyv.xa iso/music/infinitriggeri.xa iso/music/infinitriggerv.xa
+iso/music/vc.xa: iso/music/nogamesi.xa iso/music/nogamesv.xa iso/music/sneedi.xa iso/music/sneedv.xa
+iso/music/vd.xa: iso/music/birthdayi.xa iso/music/birthdayv.xa
