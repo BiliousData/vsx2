@@ -223,6 +223,10 @@ typedef struct
 	
 	//Object lists
 	ObjectList objlist_splash, objlist_fg, objlist_bg;
+
+	boolean has_ebola;
+
+	u8 ebola_multiplier;
 } Stage;
 
 extern Stage stage;

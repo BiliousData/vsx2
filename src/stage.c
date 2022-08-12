@@ -23,7 +23,7 @@
 #include "object/splash.h"
 
 //Stage constants
-#define STAGE_PERFECT //Play all notes perfectly
+//#define STAGE_PERFECT //Play all notes perfectly
 //#define STAGE_NOHUD //Disable the HUD
 
 //#define STAGE_FREECAM //Freecam
@@ -370,6 +370,15 @@ static void Stage_NoteCheck(PlayerState *this, u8 type)
 
 				//Hit the mine
 				note->type |= NOTE_FLAG_HIT;
+
+				//good job dumbass
+				if (stage.has_ebola == 0)
+					stage.has_ebola = 1;
+				stage.ebola_multiplier += 1;
+
+				stage.player->hr = 255;
+				stage.player->hg = 0;
+				stage.player->hb = 167;
 
 					this->health -= 2000;
 				if (this->character->spec & CHAR_SPEC_MISSANIM)
@@ -845,7 +854,7 @@ static void Stage_DrawNotes(void)
 				continue;
 			
 			//Miss note if player's note
-			if (!(note->type & (bot | NOTE_FLAG_HIT | NOTE_FLAG_MINE)))
+			if (!(note->type & bot ||note->type & NOTE_FLAG_HIT ||note->type & NOTE_FLAG_MINE && stage.stage_id == StageId_1_4))
 			{
 				if (stage.mode < StageMode_Net1 || i == ((stage.mode == StageMode_Net1) ? 0 : 1))
 				{
@@ -1242,6 +1251,9 @@ static void Stage_LoadState(void)
 	ObjectList_Free(&stage.objlist_splash);
 	ObjectList_Free(&stage.objlist_fg);
 	ObjectList_Free(&stage.objlist_bg);
+
+	stage.has_ebola = 0;
+	stage.ebola_multiplier = 0;
 }
 
 //prepare health in event of no set health color
@@ -1699,8 +1711,15 @@ void Stage_Tick(void)
 					stage.bump = FIXED_DEC(103,100);
 				
 				//Bump health every 4 steps
+				//also do ebola damage
 				if ((stage.song_step & 0x3) == 0)
+				{
 					stage.sbump = FIXED_DEC(103,100);
+					if (stage.has_ebola == 1)
+					{
+						stage.player_state[0].health -= 50 * stage.ebola_multiplier;
+					}
+				}
 			}
 			
 			//Scroll camera
