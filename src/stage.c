@@ -221,7 +221,7 @@ static void Stage_GetSectionScroll(SectionScroll *scroll, Section *section)
 }
 
 //Note hit detection
-static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset)
+static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset, boolean sage)
 {
 	//Get hit type
 	if (offset < 0)
@@ -272,7 +272,8 @@ static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset)
 			Obj_Splash *splash = Obj_Splash_New(
 				note_x[type ^ stage.note_swap],
 				note_y * (stage.downscroll ? -1 : 1),
-				type & 0x3
+				type & 0x3,
+				sage
 			);
 			if (splash != NULL)
 				ObjectList_Add(&stage.objlist_splash, (Object*)splash);
@@ -323,7 +324,7 @@ static void Stage_NoteCheck(PlayerState *this, u8 type)
 			note->type |= NOTE_FLAG_HIT;
 			
 			this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
-			u8 hit_type = Stage_HitNote(this, type, stage.note_scroll - note_fp);
+			u8 hit_type = Stage_HitNote(this, type, stage.note_scroll - note_fp, 0);
 			this->arrow_hitan[type & 0x3] = stage.step_time;
 			
 			#ifdef PSXF_NETWORK
@@ -356,52 +357,101 @@ static void Stage_NoteCheck(PlayerState *this, u8 type)
 		}
 		else
 		{
-			//Check if mine can be hit
-			fixed_t note_fp = (fixed_t)note->pos << FIXED_SHIFT;
-			if (note_fp - (stage.late_safe * 3 / 5) > stage.note_scroll)
-				break;
-			if (note_fp + (stage.late_safe * 2 / 5) < stage.note_scroll)
-				continue;
-			if ((note->type & NOTE_FLAG_HIT) || (note->type & (NOTE_FLAG_OPPONENT | 0x3)) != type || (note->type & NOTE_FLAG_SUSTAIN))
-				continue;
-			
-			//Hit the mine
-			note->type |= NOTE_FLAG_HIT;
-			
-				this->health -= 2000;
-			if (this->character->spec & CHAR_SPEC_MISSANIM)
-				this->character->set_anim(this->character, note_anims[type & 0x3][2]);
+			if (stage.stage_id == StageId_1_4)
+			{
+				//Check if mine can be hit
+				fixed_t note_fp = (fixed_t)note->pos << FIXED_SHIFT;
+				if (note_fp - (stage.late_safe * 3 / 5) > stage.note_scroll)
+					break;
+				if (note_fp + (stage.late_safe * 2 / 5) < stage.note_scroll)
+					continue;
+				if ((note->type & NOTE_FLAG_HIT) || (note->type & (NOTE_FLAG_OPPONENT | 0x3)) != type || (note->type & NOTE_FLAG_SUSTAIN))
+					continue;
+
+				//Hit the mine
+				note->type |= NOTE_FLAG_HIT;
+
+					this->health -= 2000;
+				if (this->character->spec & CHAR_SPEC_MISSANIM)
+					this->character->set_anim(this->character, note_anims[type & 0x3][2]);
+				else
+					this->character->set_anim(this->character, note_anims[type & 0x3][0]);
+				this->arrow_hitan[type & 0x3] = -1;
+
+				#ifdef PSXF_NETWORK
+					if (stage.mode >= StageMode_Net1)
+					{
+						//Send note hit packet
+						Packet note_hit;
+						note_hit[0] = PacketType_NoteHit;
+
+						u16 note_i = note - stage.notes;
+						note_hit[1] = note_i >> 0;
+						note_hit[2] = note_i >> 8;
+
+						note_hit[3] = this->score >> 0;
+						note_hit[4] = this->score >> 8;
+						note_hit[5] = this->score >> 16;
+						note_hit[6] = this->score >> 24;
+
+						/*
+						note_hit[7] = 0xFF;
+
+						note_hit[8] = this->combo >> 0;
+						note_hit[9] = this->combo >> 8;
+						*/
+
+						Network_Send(&note_hit);
+					}
+				#endif
+				return;
+			}
 			else
-				this->character->set_anim(this->character, note_anims[type & 0x3][0]);
-			this->arrow_hitan[type & 0x3] = -1;
-			
-			#ifdef PSXF_NETWORK
-				if (stage.mode >= StageMode_Net1)
-				{
-					//Send note hit packet
-					Packet note_hit;
-					note_hit[0] = PacketType_NoteHit;
-					
-					u16 note_i = note - stage.notes;
-					note_hit[1] = note_i >> 0;
-					note_hit[2] = note_i >> 8;
-					
-					note_hit[3] = this->score >> 0;
-					note_hit[4] = this->score >> 8;
-					note_hit[5] = this->score >> 16;
-					note_hit[6] = this->score >> 24;
-					
-					/*
-					note_hit[7] = 0xFF;
-					
-					note_hit[8] = this->combo >> 0;
-					note_hit[9] = this->combo >> 8;
-					*/
-					
-					Network_Send(&note_hit);
-				}
-			#endif
-			return;
+			{
+				//Check if note can be hit
+				fixed_t note_fp = (fixed_t)note->pos << FIXED_SHIFT;
+				if (note_fp - stage.early_safe > stage.note_scroll)
+					break;
+				if (note_fp + stage.late_safe < stage.note_scroll)
+					continue;
+				if ((note->type & NOTE_FLAG_HIT) || (note->type & (NOTE_FLAG_OPPONENT | 0x3)) != type || (note->type & NOTE_FLAG_SUSTAIN))
+					continue;
+
+				//Hit the note
+				note->type |= NOTE_FLAG_HIT;
+
+				this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
+				u8 hit_type = Stage_HitNote(this, type, stage.note_scroll - note_fp, 1);
+				this->arrow_hitan[type & 0x3] = stage.step_time;
+
+				#ifdef PSXF_NETWORK
+					if (stage.mode >= StageMode_Net1)
+					{
+						//Send note hit packet
+						Packet note_hit;
+						note_hit[0] = PacketType_NoteHit;
+
+						u16 note_i = note - stage.notes;
+						note_hit[1] = note_i >> 0;
+						note_hit[2] = note_i >> 8;
+
+						note_hit[3] = this->score >> 0;
+						note_hit[4] = this->score >> 8;
+						note_hit[5] = this->score >> 16;
+						note_hit[6] = this->score >> 24;
+
+						note_hit[7] = hit_type;
+
+						note_hit[8] = this->combo >> 0;
+						note_hit[9] = this->combo >> 8;
+
+						Network_Send(&note_hit);
+					}
+				#else
+					(void)hit_type;
+				#endif
+				return;
+			}
 		}
 	}
 	
@@ -542,7 +592,7 @@ static void Stage_ProcessPlayer(PlayerState *this, Pad *pad, boolean playing)
 					break;
 				if (note_fp + stage.late_safe < stage.note_scroll)
 					continue;
-				if ((note->type & NOTE_FLAG_MINE) || (note->type & NOTE_FLAG_OPPONENT) != i)
+				if ((note->type & NOTE_FLAG_MINE && stage.stage_id == StageId_1_4) || (note->type & NOTE_FLAG_OPPONENT) != i)
 					continue;
 				
 				//Handle note hit
@@ -908,7 +958,14 @@ static void Stage_DrawNotes(void)
 				
 				//Draw note body
 				note_src.x = 192 + ((note->type & 0x1) << 5);
-				note_src.y = (note->type & 0x2) << 4;
+				if (stage.stage_id == StageId_1_4)
+				{
+					note_src.y = 64 + ((note->type & 0x2) << 4);
+				}
+				else
+				{
+					note_src.y = (note->type & 0x2) << 4;
+				}
 				note_src.w = 32;
 				note_src.h = 32;
 				
@@ -919,24 +976,6 @@ static void Stage_DrawNotes(void)
 				
 				if (stage.downscroll)
 					note_dst.y = -note_dst.y - note_dst.h;
-				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
-				
-				
-				//Draw note fire
-				note_src.x = 192 + ((animf_count & 0x1) << 5);
-				note_src.y = 64 + ((animf_count & 0x2) * 24);
-				note_src.w = 32;
-				note_src.h = 48;
-				
-				if (stage.downscroll)
-				{
-					note_dst.y += note_dst.h;
-					note_dst.h = note_dst.h * -3 / 2;
-				}
-				else
-				{
-					note_dst.h = note_dst.h * 3 / 2;
-				}
 				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 				
 			}
@@ -1101,7 +1140,20 @@ static void Stage_LoadChart(void)
 	stage.player_state[1].max_score = 0;
 	for (Note *note = stage.notes; note->pos != 0xFFFF; note++)
 	{
-		if (note->type & (NOTE_FLAG_SUSTAIN | NOTE_FLAG_MINE))
+		if (note->type & (NOTE_FLAG_MINE))
+		{
+			if (stage.stage_id == StageId_1_4)
+				continue;
+			else
+			{
+				if (note->type & NOTE_FLAG_OPPONENT)
+					stage.player_state[1].max_score += 35;
+				else
+					stage.player_state[0].max_score += 35;
+			}
+
+		}
+		if (note->type & (NOTE_FLAG_SUSTAIN))
 			continue;
 		if (note->type & NOTE_FLAG_OPPONENT)
 			stage.player_state[1].max_score += 35;

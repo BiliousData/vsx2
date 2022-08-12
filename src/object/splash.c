@@ -30,6 +30,7 @@ boolean Obj_Splash_Tick(Object *obj)
 	
 	//Draw plubbie
 	RECT plub_src = {120 + (this->colour << 2), 224, 4, 4};
+	RECT plub_mine = {136, 224, 4, 4};
 	RECT_FIXED plub_dst = {
 		this->x - (scale << 2),
 		this->y - (scale << 2),
@@ -37,19 +38,26 @@ boolean Obj_Splash_Tick(Object *obj)
 		scale << 3
 	};
 	
-	Stage_DrawTex(&stage.tex_hud0, &plub_src, &plub_dst, stage.bump);
+	if (this->ismine)
+		Stage_DrawTex(&stage.tex_hud0, &plub_mine, &plub_dst, stage.bump);
+	else
+		Stage_DrawTex(&stage.tex_hud0, &plub_src, &plub_dst, stage.bump);
 	
 	//Draw tail
 	fixed_t tx =  this->sin * scale >> 6;
 	fixed_t ty = -this->cos * scale >> 6;
 	
 	RECT tail_src = {120 + (this->colour << 2), 228, 4, 4};
+	RECT tail_mine = {136, 228, 4, 4};
 	POINT_FIXED tl = {this->x - tx, this->y - ty};
 	POINT_FIXED tr = {this->x + tx, this->y + ty};
 	POINT_FIXED bl = {lx - tx, ly - ty};
 	POINT_FIXED br = {lx + tx, ly + ty};
 	
-	Stage_DrawTexArb(&stage.tex_hud0, &tail_src, &tl, &tr, &bl, &br, stage.bump);
+	if (this->ismine)
+		Stage_DrawTexArb(&stage.tex_hud0, &tail_mine, &tl, &tr, &bl, &br, stage.bump);
+	else
+		Stage_DrawTexArb(&stage.tex_hud0, &tail_src, &tl, &tr, &bl, &br, stage.bump);
 	
 	return this->size >= FIXED_UNIT;
 }
@@ -59,7 +67,7 @@ void Obj_Splash_Free(Object *obj)
 	(void)obj;
 }
 
-Obj_Splash *Obj_Splash_New(fixed_t x, fixed_t y, u8 colour)
+Obj_Splash *Obj_Splash_New(fixed_t x, fixed_t y, u8 colour, boolean ismine)
 {
 	//Allocate new object
 	Obj_Splash *this = (Obj_Splash*)Mem_Alloc(sizeof(Obj_Splash));
@@ -81,6 +89,8 @@ Obj_Splash *Obj_Splash_New(fixed_t x, fixed_t y, u8 colour)
 	this->y = y + this->ysp;
 	
 	this->colour = colour;
+
+	this->ismine = ismine;
 	
 	return this;
 }
