@@ -28,6 +28,8 @@ all: \
 	iso/gf/weeb.arc \
 	iso/gf/speaker.tim \
 	iso/clucky/main.arc \
+	iso/sneed/main.arc \
+	iso/chuck/main.arc \
 	iso/week1/back.arc \
 	iso/week2/back.arc \
 	iso/week3/back.arc \
@@ -36,7 +38,10 @@ all: \
 	iso/week5/back.arc \
 	iso/week6/back.arc \
 	iso/week6/back3.tim \
-	iso/week7/back.arc
+	iso/week7/back.arc \
+	iso/vtown/back.arc \
+	iso/vtown/moot/hiro.arc \
+	iso/simp/back.arc
 
 iso/%.tim: iso/%.png
 	tools/funkintimconv/funkintimconv $@ $<
@@ -90,6 +95,10 @@ iso/gf/weeb.arc: iso/gf/weeb0.tim iso/gf/weeb1.tim
 # Clucky
 iso/clucky/main.arc: iso/clucky/idle0.tim iso/clucky/idle1.tim iso/clucky/left.tim iso/clucky/down.tim iso/clucky/up.tim iso/clucky/right.tim
 
+# Sneed
+iso/sneed/main.arc: iso/sneed/idle0.tim iso/sneed/idle1.tim iso/sneed/idle2.tim iso/sneed/left.tim iso/sneed/down0.tim iso/sneed/down1.tim iso/sneed/up0.tim iso/sneed/up1.tim iso/sneed/right.tim
+iso/chuck/main.arc: iso/chuck/idle0.tim iso/chuck/idle1.tim iso/chuck/idle2.tim iso/chuck/idle3.tim iso/chuck/idle4.tim iso/chuck/idle5.tim iso/chuck/left0.tim iso/chuck/left1.tim iso/chuck/left2.tim iso/chuck/down0.tim iso/chuck/down1.tim iso/chuck/down2.tim iso/chuck/up0.tim iso/chuck/up1.tim iso/chuck/up2.tim iso/chuck/right0.tim iso/chuck/right1.tim iso/chuck/right2.tim
+
 # Week 1
 iso/week1/back.arc: iso/week1/back0.tim iso/week1/back1.tim
 
@@ -111,3 +120,10 @@ iso/week6/back.arc: iso/week6/back0.tim iso/week6/back1.tim iso/week6/back2.tim
 
 # Week 7
 iso/week7/back.arc: iso/week7/back0.tim iso/week7/back1.tim iso/week7/back2.tim iso/week7/back3.tim
+
+# /v/ stages
+iso/vtown/back.arc: iso/vtown/t0.tim iso/vtown/t1.tim iso/vtown/t2.tim iso/vtown/m0.tim iso/vtown/m1.tim iso/vtown/m2.tim iso/vtown/g.tim iso/vtown/yot.tim iso/vtown/bait.tim
+iso/vtown/moot/hiro.arc: iso/vtown/moot/hiro0.tim iso/vtown/moot/hiro1.tim iso/vtown/moot/hiro2.tim
+
+# Sneed's (formerly Chuck's)
+iso/simp/back.arc: iso/simp/shop.tim iso/simp/field.tim

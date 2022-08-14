@@ -126,6 +126,7 @@ StageBack *Back_Week1_New(void)
 		return NULL;
 	
 	//Set background functions
+	this->back.draw_overlay = NULL;
 	this->back.draw_fg = NULL;
 	this->back.draw_md = NULL;
 	this->back.draw_bg = Back_Week1_DrawBG;

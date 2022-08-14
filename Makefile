@@ -19,6 +19,8 @@ SRCS = src/main.c \
        src/psx/movie.c \
        src/stage/dummy.c \
        src/stage/week1.c \
+       src/stage/vtown.c \
+       src/stage/simp.c \
        src/animation.c \
        src/character.c \
        src/character/bf.c \
@@ -26,6 +28,8 @@ SRCS = src/main.c \
        src/character/dad.c \
        src/character/gf.c \
        src/character/clucky.c \
+       src/character/chuck.c \
+       src/character/sneed.c \
        src/object.c \
        src/object/combo.c \
        src/object/splash.c \

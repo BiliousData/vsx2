@@ -807,10 +807,13 @@ void Menu_Tick(void)
 				const char *text;
 			} menu_options[] = {
 				//{StageId_4_4, 0xFFFC96D7, "TEST"},
-				{StageId_1_4, 0xFF9271FD, "VIDYAGAEMS"},
-				{StageId_1_1, 0xFF9271FD, "SAGE"},
-				{StageId_1_2, 0xFF9271FD, "HARMONY"},
-				{StageId_1_3, 0xFF9271FD, "INFINITRIGGER"},
+				{StageId_1_1, 0xFF9271FD, "VIDYAGAEMS"},
+				{StageId_1_2, 0xFF9271FD, "SAGE"},
+				{StageId_1_3, 0xFF9271FD, "HARMONY"},
+				{StageId_1_4, 0xFF9271FD, "INFINITRIGGER"},
+				{StageId_2_1, 0xFF9271FD, "NOGAMES"},
+				{StageId_2_2, 0xFF9271FD, "SNEED"},
+				{StageId_2_3, 0xFF9271FD, "BIRTHDAY"},
 			};
 			
 			//Initialize page

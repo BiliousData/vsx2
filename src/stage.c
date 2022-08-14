@@ -55,9 +55,13 @@ static const u8 note_anims[4][3] = {
 #include "character/dad.h"
 #include "character/gf.h"
 #include "character/clucky.h"
+#include "character/chuck.h"
+#include "character/sneed.h"
 
 #include "stage/dummy.h"
 #include "stage/week1.h"
+#include "stage/vtown.h"
+#include "stage/simp.h"
 
 static const StageDef stage_defs[StageId_Max] = {
 	#include "stagedef_disc1.h"
@@ -155,6 +159,48 @@ static void Stage_ScrollCamera(void)
 	
 	//Update other camera stuff
 	stage.camera.bzoom = FIXED_MUL(stage.camera.zoom, stage.bump);
+}
+
+static void Stage_MoveChar(void)
+{
+	//move player 1 with second controller's d pad when debug is 3
+	if (stage.debug == 3)
+	{
+		if (pad_state_2.held & INPUT_LEFT)
+		    stage.player->x -= FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_DOWN)
+		    stage.player->y += FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_UP)
+		    stage.player->y -= FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_RIGHT)
+		    stage.player->x += FIXED_DEC(1,1);
+	}
+
+	//move player 2 with second controller's d pad when debug is 4
+	if (stage.debug == 4)
+	{
+		if (pad_state_2.held & INPUT_LEFT)
+		    stage.opponent->x -= FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_DOWN)
+		    stage.opponent->y += FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_UP)
+		    stage.opponent->y -= FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_RIGHT)
+		    stage.opponent->x += FIXED_DEC(1,1);
+	}
+
+	//take a guess what this does
+	if (stage.debug == 5)
+	{
+		if (pad_state_2.held & INPUT_LEFT)
+		    stage.gf->x -= FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_DOWN)
+		    stage.gf->y += FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_UP)
+		    stage.gf->y -= FIXED_DEC(1,1);
+		if (pad_state_2.held & INPUT_RIGHT)
+		    stage.gf->x += FIXED_DEC(1,1);
+	}
 }
 
 //Stage section functions
@@ -323,7 +369,18 @@ static void Stage_NoteCheck(PlayerState *this, u8 type)
 			//Hit the note
 			note->type |= NOTE_FLAG_HIT;
 			
-			this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
+			if (stage.stage_id == StageId_2_2)
+			{
+				if (note->type & NOTE_FLAG_ALT_ANIM)
+					stage.gf->set_anim(stage.gf, note_anims[type & 0x3][0]);
+				else
+					this->character->set_anim(this->character, note_anims[type & 0x3][0]);
+
+			}
+			else
+			{
+				this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
+			}
 			u8 hit_type = Stage_HitNote(this, type, stage.note_scroll - note_fp, 0);
 			this->arrow_hitan[type & 0x3] = stage.step_time;
 			
@@ -578,6 +635,14 @@ static void Stage_ProcessPlayer(PlayerState *this, Pad *pad, boolean playing)
 				Stage_NoteCheck(this, 2 | i);
 			if (this->pad_press & INPUT_RIGHT)
 				Stage_NoteCheck(this, 3 | i);
+
+			if (this->pad_press & DEBUG_SWITCH)
+			{
+				if (stage.debug < 5)
+				    stage.debug += 1;
+				else 
+				    stage.debug = 0;
+			}
 		}
 		else
 		{
@@ -880,6 +945,12 @@ static void Stage_DrawNotes(void)
 							Network_Send(&note_hit);
 						}
 					#endif
+
+					//add to counter if sage
+					if (note->type & NOTE_FLAG_MINE && StageId_1_2)
+					{
+						stage.sagecount++;
+					}
 				}
 			}
 			
@@ -1252,6 +1323,7 @@ static void Stage_LoadState(void)
 	ObjectList_Free(&stage.objlist_fg);
 	ObjectList_Free(&stage.objlist_bg);
 
+	stage.sagecount = 0;
 	stage.has_ebola = 0;
 	stage.ebola_multiplier = 0;
 }
@@ -1539,6 +1611,31 @@ void Stage_Tick(void)
 			//Get song position
 			boolean playing;
 			fixed_t next_scroll;
+
+			switch (stage.debug)
+			{
+				case 1: //step counter
+			        FntPrint("current step is %d\n", stage.song_step);
+					break;
+				case 2: //camera position
+				    FntPrint("camera X %d Y %d zoom %d", stage.camera.x/1024, stage.camera.y/1024, stage.camera.zoom);
+					break;
+				case 3: //Player 1 (bf) position
+				    FntPrint("player1 pos X %d Y %d", stage.player->x/1024, stage.player->y/1024);
+					Stage_MoveChar();
+					break;
+				case 4: //Player 2 (dad) position
+				    FntPrint("player2 pos X %d Y %d", stage.opponent->x/1024, stage.opponent->y/1024);
+					Stage_MoveChar();
+					break;
+				case 5: //Bg char (gf) position
+				    FntPrint("bg char pos X %d Y %d", stage.gf->x/1024, stage.gf->y/1024);
+					Stage_MoveChar();
+					break;
+				case 6: //ass
+					FntPrint("STRIKELINE X\nwait no wrong port");
+					break;
+			}
 			
 			#ifdef PSXF_NETWORK
 			if (stage.mode >= StageMode_Net1 && !Network_IsReady())
@@ -1759,10 +1856,31 @@ void Stage_Tick(void)
 						}
 					}
 					
-					if (opponent_anote != CharAnim_Idle)
-						stage.opponent->set_anim(stage.opponent, opponent_anote);
-					else if (opponent_snote != CharAnim_Idle)
-						stage.opponent->set_anim(stage.opponent, opponent_snote);
+					if (stage.stage_id == StageId_2_2)
+					{
+						if (stage.song_step >= 702 && stage.song_step <= 1086)
+						{
+							if (opponent_anote != CharAnim_Idle)
+								stage.gf->set_anim(stage.gf, opponent_anote);
+							else if (opponent_snote != CharAnim_Idle)
+								stage.gf->set_anim(stage.gf, opponent_snote);
+						}
+						else
+						{
+							if (opponent_anote != CharAnim_Idle)
+								stage.opponent->set_anim(stage.opponent, opponent_anote);
+							else if (opponent_snote != CharAnim_Idle)
+								stage.opponent->set_anim(stage.opponent, opponent_snote);
+						}
+					}
+					else
+					{
+						if (opponent_anote != CharAnim_Idle)
+							stage.opponent->set_anim(stage.opponent, opponent_anote);
+						else if (opponent_snote != CharAnim_Idle)
+							stage.opponent->set_anim(stage.opponent, opponent_snote);
+					}
+					
 					break;
 				}
 				case StageMode_2P:
@@ -1787,7 +1905,11 @@ void Stage_Tick(void)
 				}
 			#endif
 			}
-			
+
+			//draw overlay (sage)
+			if (stage.back->draw_overlay != NULL)
+				stage.back->draw_overlay(stage.back);
+
 			//Tick note splashes
 			ObjectList_Tick(&stage.objlist_splash);
 			
@@ -1923,8 +2045,8 @@ void Stage_Tick(void)
 			ObjectList_Tick(&stage.objlist_fg);
 			
 			//Tick characters
-			stage.player->tick(stage.player);
 			stage.opponent->tick(stage.opponent);
+			stage.player->tick(stage.player);
 			
 			//Draw stage middle
 			if (stage.back->draw_md != NULL)

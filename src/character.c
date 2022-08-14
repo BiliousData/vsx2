@@ -49,6 +49,22 @@ void Character_Draw(Character *this, Gfx_Tex *tex, const CharFrame *cframe)
 	Character_DrawParallax(this, tex, cframe, FIXED_UNIT);
 }
 
+void Character_DrawParallaxWide(Character *this, Gfx_Tex *tex, const CharFrame *cframe, fixed_t parallax, u8 widemult)
+{
+	//Draw character
+	fixed_t x = this->x - FIXED_MUL(stage.camera.x, parallax) - FIXED_DEC(cframe->off[0] * widemult,1);
+	fixed_t y = this->y - FIXED_MUL(stage.camera.y, parallax) - FIXED_DEC(cframe->off[1],1);
+	
+	RECT src = {cframe->src[0], cframe->src[1], cframe->src[2], cframe->src[3]};
+	RECT_FIXED dst = {x, y, src.w * widemult << FIXED_SHIFT, src.h << FIXED_SHIFT};
+	Stage_DrawTex(tex, &src, &dst, stage.camera.bzoom);
+}
+
+void Character_DrawWide(Character *this, Gfx_Tex *tex, const CharFrame *cframe, u8 widemult)
+{
+	Character_DrawParallaxWide(this, tex, cframe, FIXED_UNIT, widemult);
+}
+
 void Character_CheckStartSing(Character *this)
 {
 	//Update sing end if singing animation
