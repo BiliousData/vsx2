@@ -62,7 +62,7 @@ static const char *funny_messages[][2] = {
 	{"FNF MUKBANG GIF", "THATS UNRULY"},
 	{"OPEN SOURCE", "FOREVER"},
 	{"ITS A PORT", "ITS WORSE"},
-	{"WOW GATO", "WOW GATO"},
+	{"PSXFUNKIN BY CUCKYDEV", "SUCK IT DOWN"},
 	{"BALLS FISH", "BALLS FISH"},
 };
 
@@ -332,7 +332,10 @@ void Menu_Load(MenuPage page)
 	stage.song_step = 0;
 	
 	//Play menu music
-	Audio_PlayXA_Track(XA_GettinFreaky, 0x40, 0, 1);
+	if (menu.page == MenuPage_Opening)
+		Audio_PlayXA_Track(XA_Intro, 0x40, 0, 1);
+	else
+		Audio_PlayXA_Track(XA_Breakfast, 0x40, 1, 1);
 	Audio_WaitPlayXA();
 	
 	//Set background colour
@@ -360,7 +363,7 @@ void Menu_Tick(void)
 	stage.flag &= ~STAGE_FLAG_JUST_STEP;
 	
 	//Get song position
-	u16 next_step = Audio_TellXA_Milli() / 147; //100 BPM
+	u16 next_step = Audio_TellXA_Milli() / 76; //190 BPM
 	if (next_step != stage.song_step)
 	{
 		if (next_step >= stage.song_step)
@@ -384,9 +387,10 @@ void Menu_Tick(void)
 		case MenuPage_Opening:
 		{
 			u16 beat = stage.song_step >> 2;
+			FntPrint("intro step %d", stage.song_step);
 			
 			//Start title screen if opening ended
-			if (beat >= 16)
+			if (stage.song_step >= 137)
 			{
 				menu.page = menu.next_page = MenuPage_Title;
 				menu.page_swap = true;
@@ -401,48 +405,33 @@ void Menu_Tick(void)
 				//Draw different text depending on beat
 				RECT src_ng = {0, 0, 128, 128};
 				const char **funny_message = funny_messages[menu.page_state.opening.funny_message];
-				
-				switch (beat)
+
+				if (stage.song_step >= 1 && stage.song_step <= 47)
 				{
-					case 3:
-						menu.font_bold.draw(&menu.font_bold, "PRESENT", SCREEN_WIDTH2, SCREEN_HEIGHT2 + 32, FontAlign_Center);
-				//Fallthrough
-					case 2:
-					case 1:
-						menu.font_bold.draw(&menu.font_bold, "NINJAMUFFIN",   SCREEN_WIDTH2, SCREEN_HEIGHT2 - 32, FontAlign_Center);
-						menu.font_bold.draw(&menu.font_bold, "PHANTOMARCADE", SCREEN_WIDTH2, SCREEN_HEIGHT2 - 16, FontAlign_Center);
-						menu.font_bold.draw(&menu.font_bold, "KAWAISPRITE",   SCREEN_WIDTH2, SCREEN_HEIGHT2,      FontAlign_Center);
-						menu.font_bold.draw(&menu.font_bold, "EVILSKER",      SCREEN_WIDTH2, SCREEN_HEIGHT2 + 16, FontAlign_Center);
-						break;
-					
-					case 7:
-						menu.font_bold.draw(&menu.font_bold, "NEWGROUNDS",    SCREEN_WIDTH2, SCREEN_HEIGHT2 - 32, FontAlign_Center);
-						Gfx_BlitTex(&menu.tex_ng, &src_ng, (SCREEN_WIDTH - 128) >> 1, SCREEN_HEIGHT2 - 16);
-				//Fallthrough
-					case 6:
-					case 5:
-						menu.font_bold.draw(&menu.font_bold, "IN ASSOCIATION", SCREEN_WIDTH2, SCREEN_HEIGHT2 - 64, FontAlign_Center);
-						menu.font_bold.draw(&menu.font_bold, "WITH",           SCREEN_WIDTH2, SCREEN_HEIGHT2 - 48, FontAlign_Center);
-						break;
-					
-					case 11:
-						menu.font_bold.draw(&menu.font_bold, funny_message[1], SCREEN_WIDTH2, SCREEN_HEIGHT2, FontAlign_Center);
-				//Fallthrough
-					case 10:
-					case 9:
-						menu.font_bold.draw(&menu.font_bold, funny_message[0], SCREEN_WIDTH2, SCREEN_HEIGHT2 - 16, FontAlign_Center);
-						break;
-					
-					case 15:
-						menu.font_bold.draw(&menu.font_bold, "FUNKIN", SCREEN_WIDTH2, SCREEN_HEIGHT2 + 8, FontAlign_Center);
-				//Fallthrough
-					case 14:
-						menu.font_bold.draw(&menu.font_bold, "NIGHT", SCREEN_WIDTH2, SCREEN_HEIGHT2 - 8, FontAlign_Center);
-				//Fallthrough
-					case 13:
-						menu.font_bold.draw(&menu.font_bold, "FRIDAY", SCREEN_WIDTH2, SCREEN_HEIGHT2 - 24, FontAlign_Center);
-						break;
+					menu.font_bold.draw(&menu.font_bold, "ORIGINAL CHARACTERS BY", SCREEN_WIDTH2, SCREEN_HEIGHT2, FontAlign_Center);
 				}
+				if (stage.song_step >= 4 && stage.song_step <= 47)
+														//Most of them, anyway.
+					menu.font_bold.draw(&menu.font_bold, "THREE ANGLED BLUE",      SCREEN_WIDTH2, SCREEN_HEIGHT2 + 16, FontAlign_Center);
+				if (stage.song_step >= 67 && stage.song_step <= 96)
+				{
+					menu.font_bold.draw(&menu.font_bold, "ORIGINAL MOD FROM", SCREEN_WIDTH2, SCREEN_HEIGHT2 - 48, FontAlign_Center);
+					menu.font_bold.draw(&menu.font_bold, "THE DEGENERATES AT",           SCREEN_WIDTH2, SCREEN_HEIGHT2 - 32, FontAlign_Center);
+				}
+				if (stage.song_step >= 69 && stage.song_step <= 96)
+				{
+					Gfx_BlitTex(&menu.tex_ng, &src_ng, (SCREEN_WIDTH - 128) >> 1, SCREEN_HEIGHT2 - 16);
+				}
+				if (stage.song_step >= 100 && stage.song_step <= 118)
+					menu.font_bold.draw(&menu.font_bold, funny_message[0], SCREEN_WIDTH2, SCREEN_HEIGHT2 - 16, FontAlign_Center);
+				if (stage.song_step >= 102 && stage.song_step <= 118)
+					menu.font_bold.draw(&menu.font_bold, funny_message[1], SCREEN_WIDTH2, SCREEN_HEIGHT2, FontAlign_Center);
+				if (stage.song_step >= 121)
+					menu.font_bold.draw(&menu.font_bold, "FRIDAY", SCREEN_WIDTH2, SCREEN_HEIGHT2 - 24, FontAlign_Center);
+				if (stage.song_step >= 125)
+					menu.font_bold.draw(&menu.font_bold, "NIGHT", SCREEN_WIDTH2, SCREEN_HEIGHT2 - 8, FontAlign_Center);
+				if (stage.song_step >= 130)
+					menu.font_bold.draw(&menu.font_bold, "FANKAN", SCREEN_WIDTH2, SCREEN_HEIGHT2 + 8, FontAlign_Center);
 				break;
 			}
 		}
@@ -477,6 +466,7 @@ void Menu_Tick(void)
 				menu.page_state.title.fadespd = FIXED_DEC(300,1);
 				menu.next_page = MenuPage_Main;
 				menu.next_select = 0;
+				Audio_StopXA();
 			}
 
 			if (pad_state.press & PAD_R1)
@@ -566,6 +556,10 @@ void Menu_Tick(void)
 				SCREEN_HEIGHT - 32,
 				FontAlign_Left
 			);
+
+			//Play menu theme
+			if (Audio_PlayingXA() != 1)
+				Audio_PlayXA_Track(XA_Breakfast, 0x40, 1, 1);
 			
 			//Handle option and selection
 			if (menu.trans_time > 0 && (menu.trans_time -= timer_dt) <= 0)
@@ -617,13 +611,6 @@ void Menu_Tick(void)
 					}
 					menu.next_select = 0;
 					menu.trans_time = FIXED_UNIT;
-				}
-				
-				//Return to title screen if circle is pressed
-				if (pad_state.press & PAD_CIRCLE)
-				{
-					menu.next_page = MenuPage_Title;
-					Trans_Start();
 				}
 			}
 			

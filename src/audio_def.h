@@ -21,6 +21,9 @@ static const XA_TrackDef xa_tracks[] = {
 	{XA_Vc, XA_LENGTH(13100)}, //XA_Sneed
 	//VD.XA
 	{XA_Vd, XA_LENGTH(12900)}, //XA_Birthday
+	//GAMER.XA
+	{XA_Gamer, XA_LENGTH(2200)}, //XA_Intro
+	{XA_Gamer, XA_LENGTH(6000)}, //XA_Breakfast
 };
 
 static const char *xa_paths[] = {
@@ -29,6 +32,7 @@ static const char *xa_paths[] = {
 	"\\MUSIC\\VB.XA;1",     //XA_Vb
 	"\\MUSIC\\VC.XA;1",     //XA_Vc
 	"\\MUSIC\\VD.XA;1",     //XA_Vd
+	"\\MUSIC\\GAMER.XA;1",
 	NULL,
 };
 
@@ -53,6 +57,9 @@ static const XA_Mp3 xa_mp3s[] = {
 	{"sneed", true},
 	//VD.XA
     {"birthday", true},
+	//GAMER.XA
+	{"intro", false},
+	{"breakfast", false},
 	
 	{NULL, false}
 };

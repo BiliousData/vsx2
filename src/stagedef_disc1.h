@@ -68,13 +68,14 @@
 
 	{ //StageId_1_1 (nogames)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(652,1),  FIXED_DEC(310,1)},
-		{Char_Dad_New, FIXED_DEC(437,1),  FIXED_DEC(306,1)},
+		{Char_BFZ_New,    FIXED_DEC(331,1),  FIXED_DEC(211,1)},
+		{Char_ConsoleZord_New, FIXED_DEC(0,1),  FIXED_DEC(0,1)},
 		{NULL},
+		//{Char_Hand_New, FIXED_DEC(0,1),  FIXED_DEC(0,1)},
 		//{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
 		
 		//Stage background
-		Back_VTown_New,
+		Back_Dummy_New,
 		
 		//Song info
 		{FIXED_DEC(19,10),FIXED_DEC(23,10),FIXED_DEC(25,10)},
@@ -85,7 +86,7 @@
 	},
 	{ //StageId_1_2 (Sneed)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(-38,1),  FIXED_DEC(-42,1)},
+		{Char_Homer_New,    FIXED_DEC(-58,1),  FIXED_DEC(-171,1)},
 		{Char_Chuck_New, FIXED_DEC(-262,1),  FIXED_DEC(-169,1)},
 		//{NULL},
 		{Char_Sneed_New, FIXED_DEC(-194,1),  FIXED_DEC(-154,1)},

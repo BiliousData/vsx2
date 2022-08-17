@@ -129,6 +129,11 @@
 				<!-- Clucky assets -->
 				<file name = "clucky.arc" type = "data" source = "iso/clucky/main.arc"/>
 
+				<file name = "bfz.arc" type = "data" source = "iso/bfz/main.arc"/>
+				<file name = "hand.arc" type = "data" source = "iso/hand/main.arc"/>
+				<file name = "zord.arc" type = "data" source = "iso/zord/main.arc"/>
+
+				<file name = "homer.arc" type = "data" source = "iso/homer/main.arc"/>
 				<file name = "chuck.arc" type = "data" source = "iso/chuck/main.arc"/>
 				<file name = "sneed.arc" type = "data" source = "iso/sneed/main.arc"/>
 			</dir>
@@ -144,6 +149,8 @@
 				<file name = "vc.xa" type = "xa" source = "iso/music/vc.xa"/>
 				<dummy sectors="128"/>
 				<file name = "vd.xa" type = "xa" source = "iso/music/vd.xa"/>
+				<dummy sectors="128"/>
+				<file name = "gamer.xa" type = "xa" source = "iso/music/gamer.xa"/>
 				<dummy sectors="128"/>
 			</dir>
 

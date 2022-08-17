@@ -27,6 +27,10 @@ SRCS = src/main.c \
        src/character/speaker.c \
        src/character/dad.c \
        src/character/gf.c \
+       src/character/bfz.c \
+       src/character/hand.c \
+       src/character/zord.c \
+       src/character/homer.c \
        src/character/clucky.c \
        src/character/chuck.c \
        src/character/sneed.c \

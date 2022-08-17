@@ -25,6 +25,7 @@ typedef enum
 	CharAnim_Down,  CharAnim_DownAlt,
 	CharAnim_Up,    CharAnim_UpAlt,
 	CharAnim_Right, CharAnim_RightAlt,
+	CharAnim_FUCK,  CharAnim_IdleAlt,
 	
 	CharAnim_Max //Max standard/shared animation
 } CharAnim;
@@ -66,8 +67,8 @@ void Character_Free(Character *this);
 void Character_Init(Character *this, fixed_t x, fixed_t y);
 void Character_DrawParallax(Character *this, Gfx_Tex *tex, const CharFrame *cframe, fixed_t parallax);
 void Character_Draw(Character *this, Gfx_Tex *tex, const CharFrame *cframe);
-void Character_DrawParallaxWide(Character *this, Gfx_Tex *tex, const CharFrame *cframe, fixed_t parallax, u8 widemult);
-void Character_DrawWide(Character *this, Gfx_Tex *tex, const CharFrame *cframe, u8 widemult);
+void Character_DrawParallaxScale(Character *this, Gfx_Tex *tex, const CharFrame *cframe, fixed_t parallax, u8 widemult, u8 tallmult);
+void Character_DrawScale(Character *this, Gfx_Tex *tex, const CharFrame *cframe, u8 widemult, u8 tallmult);
 
 void Character_CheckStartSing(Character *this);
 void Character_CheckEndSing(Character *this);

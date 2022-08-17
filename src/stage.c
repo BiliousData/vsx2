@@ -28,7 +28,7 @@
 
 //#define STAGE_FREECAM //Freecam
 
-static const fixed_t note_x[8] = {
+static fixed_t note_x[8] = {
 	//BF
 	 FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4),
 	 FIXED_DEC(60,1) + FIXED_DEC(SCREEN_WIDEADD,4),//+34
@@ -55,6 +55,10 @@ static const u8 note_anims[4][3] = {
 #include "character/dad.h"
 #include "character/gf.h"
 #include "character/clucky.h"
+#include "character/bfz.h"
+#include "character/hand.h"
+#include "character/zord.h"
+#include "character/homer.h"
 #include "character/chuck.h"
 #include "character/sneed.h"
 
@@ -815,17 +819,29 @@ static void Stage_DrawHealth(s16 health, u8 i, s8 ox)
 		24,
 		24
 	};
-	RECT_FIXED dst = {
+	RECT_FIXED norm_dst = {
 		hx + ox * FIXED_DEC(11,1) - FIXED_DEC(12,1),
 		FIXED_DEC(SCREEN_HEIGHT2 - 32 + 4 - 12, 1),
 		src.w << FIXED_SHIFT,
 		src.h << FIXED_SHIFT
 	};
+	RECT_FIXED flip_dst = {
+		hx + ox * FIXED_DEC(11,1) - FIXED_DEC(12,1) + FIXED_DEC(24,1),
+		FIXED_DEC(SCREEN_HEIGHT2 - 32 + 4 - 12, 1),
+		-src.w << FIXED_SHIFT,
+		src.h << FIXED_SHIFT
+	};
 	if (stage.downscroll)
-		dst.y = -dst.y - dst.h;
+	{
+		norm_dst.y = -norm_dst.y - norm_dst.h;
+		flip_dst.y = -flip_dst.y - flip_dst.h;
+	}
 	
 	//Draw health icon
-	Stage_DrawTex(&stage.tex_hud1, &src, &dst, FIXED_MUL(stage.bump, stage.sbump));
+	//if (ox == -1)
+		Stage_DrawTex(&stage.tex_hud1, &src, &norm_dst, FIXED_MUL(stage.bump, stage.sbump));
+	//else
+	//	Stage_DrawTex(&stage.tex_hud1, &src, &flip_dst, FIXED_MUL(stage.bump, stage.sbump));
 }
 
 static void Stage_DrawStrum(u8 i, RECT *note_src, RECT_FIXED *note_dst)
@@ -1343,6 +1359,42 @@ static void Stage_HealthPrep(void)
 	//that's it
 }
 
+int note1x = 26;
+int note2x = 60;
+int note3x = 94;
+int note4x = 128;
+
+int note5x = -128;
+int note6x = -94;
+int note7x = -60;
+int note8x = -26;
+
+//harvested code from mind games
+//just for nogames middlescroll
+void Stage_Note_Move(void)
+{
+
+	note_x[0] = FIXED_DEC(note1x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+	note_x[1] = FIXED_DEC(note2x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+	note_x[2] = FIXED_DEC(note3x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+	note_x[3] = FIXED_DEC(note4x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+	note_x[4] = FIXED_DEC(note5x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+	note_x[5] = FIXED_DEC(note6x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+	note_x[6] = FIXED_DEC(note7x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+	note_x[7] = FIXED_DEC(note8x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
+	
+	//launch ConsoleZord's notes offscreen
+	note5x = 200;
+	note6x = 200;
+	note7x = 200;
+	note8x = 200;
+	//set bf's notes in the middle
+	note1x = -54;
+	note2x = -20;
+	note3x = 14; 
+	note4x = 48;
+}
+
 //Stage functions
 void Stage_Load(StageId id, StageDiff difficulty, boolean story)
 {
@@ -1618,7 +1670,8 @@ void Stage_Tick(void)
 			        FntPrint("current step is %d\n", stage.song_step);
 					break;
 				case 2: //camera position
-				    FntPrint("camera X %d Y %d zoom %d", stage.camera.x/1024, stage.camera.y/1024, stage.camera.zoom);
+				    //FntPrint("camera X %d Y %d zoom %d", stage.camera.x/1024, stage.camera.y/1024, stage.camera.zoom);
+					FntPrint("\n\nZord anim %s", stage.opponent->animatable.anim);
 					break;
 				case 3: //Player 1 (bf) position
 				    FntPrint("player1 pos X %d Y %d", stage.player->x/1024, stage.player->y/1024);
@@ -1635,6 +1688,11 @@ void Stage_Tick(void)
 				case 6: //ass
 					FntPrint("STRIKELINE X\nwait no wrong port");
 					break;
+			}
+
+			if (stage.stage_id == StageId_2_1)
+			{
+				Stage_Note_Move(); //fuck
 			}
 			
 			#ifdef PSXF_NETWORK
@@ -2045,8 +2103,16 @@ void Stage_Tick(void)
 			ObjectList_Tick(&stage.objlist_fg);
 			
 			//Tick characters
-			stage.opponent->tick(stage.opponent);
-			stage.player->tick(stage.player);
+			if (stage.stage_id == StageId_2_2)
+			{
+				stage.opponent->tick(stage.opponent);
+				stage.player->tick(stage.player);
+			}
+			else
+			{
+				stage.player->tick(stage.player);
+				stage.opponent->tick(stage.opponent);
+			}
 			
 			//Draw stage middle
 			if (stage.back->draw_md != NULL)

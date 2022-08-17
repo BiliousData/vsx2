@@ -28,8 +28,12 @@ all: \
 	iso/gf/weeb.arc \
 	iso/gf/speaker.tim \
 	iso/clucky/main.arc \
+	iso/bfz/main.arc \
+	iso/hand/main.arc \
+	iso/zord/main.arc \
 	iso/sneed/main.arc \
 	iso/chuck/main.arc \
+	iso/homer/main.arc \
 	iso/week1/back.arc \
 	iso/week2/back.arc \
 	iso/week3/back.arc \
@@ -95,9 +99,19 @@ iso/gf/weeb.arc: iso/gf/weeb0.tim iso/gf/weeb1.tim
 # Clucky
 iso/clucky/main.arc: iso/clucky/idle0.tim iso/clucky/idle1.tim iso/clucky/left.tim iso/clucky/down.tim iso/clucky/up.tim iso/clucky/right.tim
 
-# Sneed
+#bfz
+iso/bfz/main.arc: iso/bfz/hit.tim
+iso/hand/main.arc: iso/hand/idle0.tim iso/hand/idle0.tim iso/hand/idle1.tim iso/hand/idle2.tim iso/hand/leftb0.tim iso/hand/leftb1.tim iso/hand/leftb2.tim iso/hand/downb0.tim iso/hand/downb1.tim iso/hand/downb2.tim iso/hand/upb0.tim iso/hand/upb1.tim iso/hand/upb2.tim iso/hand/rightb0.tim iso/hand/rightb1.tim iso/hand/rightb2.tim iso/hand/left0.tim iso/hand/left1.tim iso/hand/left2.tim iso/hand/down0.tim iso/hand/down1.tim iso/hand/down2.tim iso/hand/up0.tim iso/hand/up1.tim iso/hand/up2.tim iso/hand/right0.tim iso/hand/right1.tim iso/hand/right2.tim
+
+# Consolezord
+iso/zord/main.arc: iso/zord/idle0.tim iso/zord/idle1.tim iso/zord/idle2.tim iso/zord/idle3.tim iso/zord/idle4.tim iso/zord/idle5.tim iso/zord/idle6.tim iso/zord/left0.tim iso/zord/left1.tim iso/zord/left2.tim iso/zord/left3.tim iso/zord/lefta0.tim iso/zord/lefta1.tim iso/zord/lefta2.tim iso/zord/lefta3.tim iso/zord/down0.tim iso/zord/down1.tim iso/zord/down2.tim iso/zord/down3.tim iso/zord/downa0.tim iso/zord/downa1.tim iso/zord/downa2.tim iso/zord/downa3.tim iso/zord/up0.tim iso/zord/up1.tim iso/zord/up2.tim iso/zord/up3.tim iso/zord/upalt0.tim iso/zord/upalt1.tim iso/zord/upalt2.tim iso/zord/upalt3.tim iso/zord/right0.tim iso/zord/right1.tim iso/zord/right2.tim iso/zord/right3.tim iso/zord/righta0.tim iso/zord/righta1.tim iso/zord/righta2.tim iso/zord/righta3.tim
+
+# Chuck & Sneed
 iso/sneed/main.arc: iso/sneed/idle0.tim iso/sneed/idle1.tim iso/sneed/idle2.tim iso/sneed/left.tim iso/sneed/down0.tim iso/sneed/down1.tim iso/sneed/up0.tim iso/sneed/up1.tim iso/sneed/right.tim
 iso/chuck/main.arc: iso/chuck/idle0.tim iso/chuck/idle1.tim iso/chuck/idle2.tim iso/chuck/idle3.tim iso/chuck/idle4.tim iso/chuck/idle5.tim iso/chuck/left0.tim iso/chuck/left1.tim iso/chuck/left2.tim iso/chuck/down0.tim iso/chuck/down1.tim iso/chuck/down2.tim iso/chuck/up0.tim iso/chuck/up1.tim iso/chuck/up2.tim iso/chuck/right0.tim iso/chuck/right1.tim iso/chuck/right2.tim
+
+# Homer Simpson
+iso/homer/main.arc: iso/homer/idle0.tim iso/homer/idle1.tim iso/homer/left.tim iso/homer/down.tim iso/homer/up.tim iso/homer/right.tim
 
 # Week 1
 iso/week1/back.arc: iso/week1/back0.tim iso/week1/back1.tim

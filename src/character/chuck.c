@@ -112,7 +112,7 @@ void Char_Chuck_Tick(Character *character)
 	
 	//Animate and draw
 	Animatable_Animate(&character->animatable, (void*)this, Char_Chuck_SetFrame);
-	Character_DrawWide(character, &this->tex, &char_chuck_frame[this->frame], 2);
+	Character_DrawScale(character, &this->tex, &char_chuck_frame[this->frame], 2, 1);
 }
 
 void Char_Chuck_SetAnim(Character *character, u8 anim)

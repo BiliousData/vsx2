@@ -32,13 +32,17 @@ StageBack *Back_Dummy_New(void)
 		return NULL;
 	
 	//Set background functions
+	this->back.draw_overlay = NULL;
 	this->back.draw_fg = NULL;
 	this->back.draw_md = NULL;
 	this->back.draw_bg = NULL;
 	this->back.free = Back_Dummy_Free;
 	
 	//Use non-pitch black background
-	Gfx_SetClear(62, 48, 64);
+	if (stage.stage_id == StageId_2_1)
+		Gfx_SetClear(255, 255, 255);
+	else
+		Gfx_SetClear(62, 48, 64);
 	
 	return (StageBack*)this;
 }
