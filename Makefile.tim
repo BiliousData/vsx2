@@ -39,6 +39,7 @@ all: \
 	iso/green/main.arc \
 	iso/green/brear.tim \
 	iso/green/bfront.tim \
+	iso/green/sblast.tim \
 	iso/week1/back.arc \
 	iso/week2/back.arc \
 	iso/week3/back.arc \

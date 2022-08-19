@@ -153,6 +153,7 @@
 				<file name = "green.arc" type = "data" source = "iso/green/main.arc"/>
 				<file name = "brear.tim" type = "data" source = "iso/green/brear.tim"/>
 				<file name = "bfront.tim" type = "data" source = "iso/green/bfront.tim"/>
+				<file name = "sblast.tim" type = "data" source = "iso/green/sblast.tim"/>
 			</dir>
 			
 			<!-- Music -->

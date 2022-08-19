@@ -33,8 +33,47 @@ typedef struct
 	Gfx_Tex tex;
 	u8 frame, tex_id;
 	//Bike
-	Gfx_Tex tex_brear, tex_bfront;
+	Gfx_Tex tex_brear, tex_bfront, tex_sandblast;
+
+	//sandblast
+	u8 sand_frame, sand_tex_id;
+	Animatable sand_animatable;
 } Char_Green;
+
+static const CharFrame sand_frame[3] = {
+	{0, {  0,   0 + 72,  61, 65}, {0,  0}},
+	{0, { 62,   0 + 72,  59, 52}, {7,-15}},
+	{0, {122,   0 + 72,  60, 46}, {9,-21}},
+};
+
+static const Animation sand_anim[1] = {
+	{1, (const u8[]){0, 1, 2, ASCR_REPEAT}},
+};
+
+void Bike_Sand_Draw(Char_Green *this, fixed_t x, fixed_t y)
+{
+	//Draw animated object
+	const CharFrame *cframe = &sand_frame[this->sand_frame];
+	
+	fixed_t ox = x - ((fixed_t)cframe->off[0] << FIXED_SHIFT);
+	fixed_t oy = y - ((fixed_t)cframe->off[1] << FIXED_SHIFT);
+	
+	RECT src = {cframe->src[0], cframe->src[1], cframe->src[2], cframe->src[3]};
+	RECT_FIXED dst = {ox, oy, src.w << FIXED_SHIFT, src.h << FIXED_SHIFT};
+	Stage_DrawTex(&this->tex_sandblast, &src, &dst, stage.camera.bzoom);
+}
+
+void Bike_Sand_SetFrame(void *user, u8 frame)
+{
+	Char_Green *this = (Char_Green*)user;
+	
+	//Check if this is a new frame
+	if (frame != this->sand_frame)
+	{
+		//Check if new art shall be loaded
+		const CharFrame *cframe = &sand_frame[this->sand_frame = frame];
+	}
+}
 
 //Green character definitions
 static const CharFrame char_green_frame[] = {
@@ -102,8 +141,8 @@ void Char_Green_Tick(Character *character)
 	//Draw Bike Front
 	RECT bfront_src = {0, 0, 81, 68};
 	RECT_FIXED bfront_dst = {
-		stage.player->x + FIXED_DEC(39,1) - fx,
-		stage.player->y + FIXED_DEC(39,1) - fy,
+		this->character.x + FIXED_DEC(39,1) - fx,
+		this->character.y + FIXED_DEC(39,1) - fy,
 		FIXED_DEC(bfront_src.w,1),
 		FIXED_DEC(bfront_src.h,1)
 	};
@@ -116,12 +155,16 @@ void Char_Green_Tick(Character *character)
 	//Draw Bike Rear
 	RECT brear_src = {0, 0, 124, 68};
 	RECT_FIXED brear_dst = {
-		stage.player->x + FIXED_DEC(-50,1) - fx,
-		stage.player->y + FIXED_DEC(30,1) - fy,
+		this->character.x + FIXED_DEC(-50,1) - fx,
+		this->character.y + FIXED_DEC(30,1) - fy,
 		FIXED_DEC(brear_src.w,1),
 		FIXED_DEC(brear_src.h,1)
 	};
 	Stage_DrawTex(&this->tex_brear, &brear_src, &brear_dst, stage.camera.bzoom);
+
+	//Draw Bike Sandblast
+	Animatable_Animate(&this->sand_animatable, (void*)this, Bike_Sand_SetFrame);
+	Bike_Sand_Draw(this, this->character.x + FIXED_DEC(-70,1) - fx, this->character.y + FIXED_DEC(30,1) - fy);
 }
 
 void Char_Green_SetAnim(Character *character, u8 anim)
@@ -182,6 +225,7 @@ Character *Char_GreenBikerDude_New(fixed_t x, fixed_t y)
 
 	Gfx_LoadTex(&this->tex_brear, IO_Read("\\CHAR\\BREAR.TIM;1"), GFX_LOADTEX_FREE);
 	Gfx_LoadTex(&this->tex_bfront, IO_Read("\\CHAR\\BFRONT.TIM;1"), GFX_LOADTEX_FREE);
+	Gfx_LoadTex(&this->tex_sandblast, IO_Read("\\CHAR\\SBLAST.TIM;1"), GFX_LOADTEX_FREE);
 	
 	//Initialize render state
 	this->tex_id = this->frame = 0xFF;
@@ -189,6 +233,9 @@ Character *Char_GreenBikerDude_New(fixed_t x, fixed_t y)
 	this->character.hr = 204;
 	this->character.hg = 204;
 	this->character.hb = 51;
+
+	Animatable_Init(&this->sand_animatable, sand_anim);
+	Animatable_SetAnim(&this->sand_animatable, 0);
 	
 	return (Character*)this;
 }

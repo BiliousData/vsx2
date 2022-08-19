@@ -2104,7 +2104,7 @@ void Stage_Tick(void)
 			ObjectList_Tick(&stage.objlist_fg);
 			
 			//Tick characters
-			if (stage.stage_id == StageId_2_2)
+			if (stage.stage_id == StageId_2_2 || stage.stage_id == StageId_3_1)
 			{
 				stage.opponent->tick(stage.opponent);
 				stage.player->tick(stage.player);
