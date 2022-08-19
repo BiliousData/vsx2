@@ -4,7 +4,9 @@ all: \
   iso/music/va.xa \
   iso/music/vb.xa \
   iso/music/vc.xa \
-  iso/music/vd.xa
+  iso/music/vd.xa \
+  iso/music/biker.xa \
+  iso/music/earthbound.xa
 
 # XA converts
 iso/music/%.xa: iso/music/%.mp3
@@ -19,3 +21,5 @@ iso/music/va.xa: iso/music/vidyagaemsi.xa iso/music/vidyagaemsv.xa iso/music/sag
 iso/music/vb.xa: iso/music/harmonyi.xa iso/music/harmonyv.xa iso/music/infinitriggeri.xa iso/music/infinitriggerv.xa
 iso/music/vc.xa: iso/music/nogamesi.xa iso/music/nogamesv.xa iso/music/sneedi.xa iso/music/sneedv.xa
 iso/music/vd.xa: iso/music/birthdayi.xa iso/music/birthdayv.xa
+iso/music/biker.xa: iso/music/blasteri.xa iso/music/blasterv.xa
+iso/music/earthbound.xa: iso/music/konbanwai.xa iso/music/konbanwav.xa iso/music/title.xa iso/music/boundmenu.xa

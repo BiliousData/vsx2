@@ -18,6 +18,8 @@ typedef enum
 	XA_Vc,     //VC.XA
 	XA_Vd,
 	XA_Gamer,
+	XA_Biker, //BIKER.XA
+	XA_EarthBound, //EARTHBOUND.XA
 	
 	XA_Max,
 } XA_File;
@@ -41,6 +43,12 @@ typedef enum
 	//GAMER.XA
 	XA_Intro,
 	XA_Breakfast,
+	//BIKER.XA
+	XA_Blaster,
+	//EARTHBOUND.XA
+	XA_Konbanwa,
+	XA_Title,
+	XA_BoundMenu,
 	
 	XA_TrackMax,
 } XA_Track;

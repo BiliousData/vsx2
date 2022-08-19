@@ -47,6 +47,8 @@ typedef enum
 	StageId_2_1,
 	StageId_2_2,
 	StageId_2_3,
+	StageId_3_1,
+	StageId_3_2,
 	
 	StageId_Max
 } StageId;

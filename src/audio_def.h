@@ -24,6 +24,12 @@ static const XA_TrackDef xa_tracks[] = {
 	//GAMER.XA
 	{XA_Gamer, XA_LENGTH(2200)}, //XA_Intro
 	{XA_Gamer, XA_LENGTH(6000)}, //XA_Breakfast
+	//BIKER.XA
+	{XA_Biker, XA_LENGTH(10100)},
+	//EARTHBOUND.XA
+	{XA_EarthBound, XA_LENGTH(11700)},
+	{XA_EarthBound, XA_LENGTH(2100)},
+	{XA_EarthBound, XA_LENGTH(3900)},
 };
 
 static const char *xa_paths[] = {
@@ -33,6 +39,8 @@ static const char *xa_paths[] = {
 	"\\MUSIC\\VC.XA;1",     //XA_Vc
 	"\\MUSIC\\VD.XA;1",     //XA_Vd
 	"\\MUSIC\\GAMER.XA;1",
+	"\\MUSIC\\BIKER.XA;1",
+	"\\MUSIC\\PORK.XA;1",
 	NULL,
 };
 
@@ -60,6 +68,12 @@ static const XA_Mp3 xa_mp3s[] = {
 	//GAMER.XA
 	{"intro", false},
 	{"breakfast", false},
+	//BIKER.XA
+	{"blaster", true},
+	//EARTHBOUND.XA
+	{"konbanwa", true},
+	{"title", false},
+	{"boundmenu", false},
 	
 	{NULL, false}
 };

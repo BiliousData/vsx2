@@ -119,3 +119,37 @@
 		
 		StageId_2_3, 0,
 	},
+	{ //StageId_3_1 (Blaster)
+		//Characters
+		{Char_GreenBikerDude_New,    FIXED_DEC(-47,1),  FIXED_DEC(-27,1)},
+		{Char_X_New, FIXED_DEC(-283,1),  FIXED_DEC(-79,1)},
+		{NULL},
+		//{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
+		
+		//Stage background
+		Back_Dummy_New,
+		
+		//Song info
+		{FIXED_DEC(19,10),FIXED_DEC(23,10),FIXED_DEC(25,10)},
+		3, 1,
+		XA_Blaster, 0,
+		
+		StageId_3_1, 0,
+	},
+	{ //StageId_3_2 (Konbanwa)
+		//Characters
+		{Char_BF_New,    FIXED_DEC(652,1),  FIXED_DEC(310,1)},
+		{Char_Dad_New, FIXED_DEC(437,1),  FIXED_DEC(306,1)},
+		{NULL},
+		//{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
+		
+		//Stage background
+		Back_Dummy_New,
+		
+		//Song info
+		{FIXED_DEC(19,10),FIXED_DEC(23,10),FIXED_DEC(25,10)},
+		3, 2,
+		XA_Konbanwa, 0,
+		
+		StageId_3_2, 0,
+	},

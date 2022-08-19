@@ -410,7 +410,7 @@ void Menu_Tick(void)
 				{
 					menu.font_bold.draw(&menu.font_bold, "ORIGINAL CHARACTERS BY", SCREEN_WIDTH2, SCREEN_HEIGHT2, FontAlign_Center);
 				}
-				if (stage.song_step >= 4 && stage.song_step <= 47)
+				if (stage.song_step >= 3 && stage.song_step <= 47)
 														//Most of them, anyway.
 					menu.font_bold.draw(&menu.font_bold, "THREE ANGLED BLUE",      SCREEN_WIDTH2, SCREEN_HEIGHT2 + 16, FontAlign_Center);
 				if (stage.song_step >= 67 && stage.song_step <= 96)
@@ -801,6 +801,8 @@ void Menu_Tick(void)
 				{StageId_2_1, 0xFF9271FD, "NOGAMES"},
 				{StageId_2_2, 0xFF9271FD, "SNEED"},
 				{StageId_2_3, 0xFF9271FD, "BIRTHDAY"},
+				{StageId_3_1, 0xFF9271FD, "BLASTER"},
+				{StageId_3_2, 0xFF9271FD, "KONBANWA"},
 			};
 			
 			//Initialize page
@@ -849,6 +851,10 @@ void Menu_Tick(void)
 					menu.next_page = MenuPage_Stage;
 					menu.page_param.stage.id = menu_options[menu.select].stage;
 					menu.page_param.stage.story = false;
+					if (menu.page_param.stage.id == StageId_3_1)
+						load.rockmanload = true;
+					else
+						load.rockmanload = false;
 					Trans_Start();
 				}
 				

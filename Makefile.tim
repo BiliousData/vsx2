@@ -1,6 +1,7 @@
 all: \
 	iso/menu/menu.arc \
 	iso/menu/loading.tim \
+	iso/menu/x3load.tim \
 	iso/font/boldfont.tim \
 	iso/font/arial.tim \
 	iso/stage/hud0.tim \
@@ -34,6 +35,10 @@ all: \
 	iso/sneed/main.arc \
 	iso/chuck/main.arc \
 	iso/homer/main.arc \
+	iso/x/main.arc \
+	iso/green/main.arc \
+	iso/green/brear.tim \
+	iso/green/bfront.tim \
 	iso/week1/back.arc \
 	iso/week2/back.arc \
 	iso/week3/back.arc \
@@ -112,6 +117,12 @@ iso/chuck/main.arc: iso/chuck/idle0.tim iso/chuck/idle1.tim iso/chuck/idle2.tim 
 
 # Homer Simpson
 iso/homer/main.arc: iso/homer/idle0.tim iso/homer/idle1.tim iso/homer/left.tim iso/homer/down.tim iso/homer/up.tim iso/homer/right.tim
+
+# Mega Man X
+iso/x/main.arc: iso/x/idle0.tim iso/x/idle1.tim iso/x/idle2.tim iso/x/idle3.tim iso/x/idle4.tim iso/x/left0.tim iso/x/left1.tim iso/x/left2.tim iso/x/down0.tim iso/x/down1.tim iso/x/down2.tim iso/x/up0.tim iso/x/up1.tim iso/x/up2.tim iso/x/right0.tim iso/x/right1.tim iso/x/right2.tim
+
+# Green Biker Dude
+iso/green/main.arc: iso/green/hit0.tim iso/green/hit1.tim iso/green/hit2.tim
 
 # Week 1
 iso/week1/back.arc: iso/week1/back0.tim iso/week1/back1.tim

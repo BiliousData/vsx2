@@ -61,6 +61,8 @@ static const u8 note_anims[4][3] = {
 #include "character/homer.h"
 #include "character/chuck.h"
 #include "character/sneed.h"
+#include "character/x.h"
+#include "character/green.h"
 
 #include "stage/dummy.h"
 #include "stage/week1.h"
@@ -1670,8 +1672,7 @@ void Stage_Tick(void)
 			        FntPrint("current step is %d\n", stage.song_step);
 					break;
 				case 2: //camera position
-				    //FntPrint("camera X %d Y %d zoom %d", stage.camera.x/1024, stage.camera.y/1024, stage.camera.zoom);
-					FntPrint("\n\nZord anim %s", stage.opponent->animatable.anim);
+				    FntPrint("camera X %d Y %d zoom %d", stage.camera.x/1024, stage.camera.y/1024, stage.camera.zoom);
 					break;
 				case 3: //Player 1 (bf) position
 				    FntPrint("player1 pos X %d Y %d", stage.player->x/1024, stage.player->y/1024);

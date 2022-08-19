@@ -1,0 +1,4 @@
+1 xa konbanwav.xa 1 0
+1 xa konbanwai.xa 1 1
+1 xa title.xa 1 2
+1 xa boundmenu.xa 1 3

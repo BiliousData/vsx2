@@ -24,6 +24,7 @@
 			<!-- Menu assets -->
 			<dir name = "menu">
 				<file name = "loading.tim" type = "data" source = "iso/menu/loading.tim"/>
+				<file name = "x3load.tim" type = "data" source = "iso/menu/x3load.tim"/>
 				<file name = "menu.arc" type = "data" source = "iso/menu/menu.arc"/>
 			</dir>
 			
@@ -75,6 +76,16 @@
 				<file name = "2.3e.cht" type = "data" source = "iso/chart/birthday.json.cht"/>
 				<file name = "2.3n.cht" type = "data" source = "iso/chart/birthday.json.cht"/>
 				<file name = "2.3h.cht" type = "data" source = "iso/chart/birthday.json.cht"/>
+			</dir>
+
+			<dir name = "week3">
+				<file name = "3.1e.cht" type = "data" source = "iso/chart/blaster.json.cht"/>
+				<file name = "3.1n.cht" type = "data" source = "iso/chart/blaster.json.cht"/>
+				<file name = "3.1h.cht" type = "data" source = "iso/chart/blaster.json.cht"/>
+				<!-- Fresh charts -->
+				<file name = "3.2e.cht" type = "data" source = "iso/chart/konbanwa.json.cht"/>
+				<file name = "3.2n.cht" type = "data" source = "iso/chart/konbanwa.json.cht"/>
+				<file name = "3.2h.cht" type = "data" source = "iso/chart/konbanwa.json.cht"/>
 			</dir>
 
 			<dir name = "v">
@@ -136,6 +147,12 @@
 				<file name = "homer.arc" type = "data" source = "iso/homer/main.arc"/>
 				<file name = "chuck.arc" type = "data" source = "iso/chuck/main.arc"/>
 				<file name = "sneed.arc" type = "data" source = "iso/sneed/main.arc"/>
+
+				<!-- Mega Man characters -->
+				<file name = "x.arc" type = "data" source = "iso/x/main.arc"/>
+				<file name = "green.arc" type = "data" source = "iso/green/main.arc"/>
+				<file name = "brear.tim" type = "data" source = "iso/green/brear.tim"/>
+				<file name = "bfront.tim" type = "data" source = "iso/green/bfront.tim"/>
 			</dir>
 			
 			<!-- Music -->
@@ -151,6 +168,10 @@
 				<file name = "vd.xa" type = "xa" source = "iso/music/vd.xa"/>
 				<dummy sectors="128"/>
 				<file name = "gamer.xa" type = "xa" source = "iso/music/gamer.xa"/>
+				<dummy sectors="128"/>
+				<file name = "biker.xa" type = "xa" source = "iso/music/biker.xa"/>
+				<dummy sectors="128"/>
+				<file name = "pork.xa" type = "xa" source = "iso/music/earthbound.xa"/>
 				<dummy sectors="128"/>
 			</dir>
 

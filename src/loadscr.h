@@ -7,6 +7,14 @@
 #ifndef PSXF_GUARD_LOADSCR_H
 #define PSXF_GUARD_LOADSCR_H
 
+#include "psx.h"
+
+typedef struct
+{
+  boolean rockmanload;
+} LoadScr;
+extern LoadScr load;
+
 //Loading screen functions
 void LoadScr_Start(void);
 void LoadScr_End(void);
