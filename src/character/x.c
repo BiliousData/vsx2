@@ -118,6 +118,36 @@ void Char_X_Tick(Character *character)
 	//Animate and draw
 	Animatable_Animate(&character->animatable, (void*)this, Char_X_SetFrame);
 	Character_Draw(character, &this->tex, &char_x_frame[this->frame]);
+
+	switch (stage.song_step)
+	{
+		case -20:
+		{
+			/*
+				leaving data here for my own future reference
+				X's normal position:
+				X = -283
+				Y = -79
+				I need to make X come back to these coordinates after the song starts
+			*/
+			stage.nocamscroll = true;
+			this->character.x = FIXED_DEC(-446,1);
+			break;
+		}
+		case 63:
+		{
+			stage.nocamscroll = false;
+			break;
+		}
+	}
+
+	if (stage.song_step >= 22)
+	{
+		if (this->character.x <= FIXED_DEC(-283,1))
+		{
+			this->character.x += FIXED_DEC(8,10);
+		}
+	}
 }
 
 void Char_X_SetAnim(Character *character, u8 anim)

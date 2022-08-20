@@ -165,6 +165,19 @@ void Char_Green_Tick(Character *character)
 	//Draw Bike Sandblast
 	Animatable_Animate(&this->sand_animatable, (void*)this, Bike_Sand_SetFrame);
 	Bike_Sand_Draw(this, this->character.x + FIXED_DEC(-70,1) - fx, this->character.y + FIXED_DEC(30,1) - fy);
+
+	//Intro moving
+	if (stage.song_step == -20)
+	{
+		this->character.x = FIXED_DEC(-362,1);
+	}
+	if (stage.song_step >= 22)
+	{
+		if (this->character.x <= FIXED_DEC(-47,1))
+		{
+			this->character.x += FIXED_DEC(155,100);
+		}
+	}
 }
 
 void Char_Green_SetAnim(Character *character, u8 anim)

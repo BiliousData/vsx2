@@ -239,6 +239,8 @@ typedef struct
 	u8 ebola_multiplier;
 
 	u8 debug;
+
+	boolean nocamscroll;
 } Stage;
 
 extern Stage stage;

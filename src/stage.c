@@ -28,6 +28,18 @@
 
 //#define STAGE_FREECAM //Freecam
 
+int note1x = 26;
+int note2x = 60;
+int note3x = 94;
+int note4x = 128;
+
+int note5x = -128;
+int note6x = -94;
+int note7x = -60;
+int note8x = -26;
+
+boolean nobar;
+
 static fixed_t note_x[8] = {
 	//BF
 	 FIXED_DEC(26,1) + FIXED_DEC(SCREEN_WIDEADD,4),
@@ -1335,6 +1347,17 @@ static void Stage_LoadState(void)
 		stage.player_state[i].pad_held = stage.player_state[i].pad_press = 0;
 
 		dselect = 0;
+		stage.nocamscroll = false;
+		nobar = false;
+
+		note1x = 26;
+		note2x = 60;
+		note3x = 94;
+		note4x = 128;
+		note5x = -128;
+		note6x = -94;
+		note7x = -60;
+		note8x = -26;
 	}
 	
 	ObjectList_Free(&stage.objlist_splash);
@@ -1361,18 +1384,7 @@ static void Stage_HealthPrep(void)
 	//that's it
 }
 
-int note1x = 26;
-int note2x = 60;
-int note3x = 94;
-int note4x = 128;
-
-int note5x = -128;
-int note6x = -94;
-int note7x = -60;
-int note8x = -26;
-
 //harvested code from mind games
-//just for nogames middlescroll
 void Stage_Note_Move(void)
 {
 
@@ -1384,17 +1396,102 @@ void Stage_Note_Move(void)
 	note_x[5] = FIXED_DEC(note6x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
 	note_x[6] = FIXED_DEC(note7x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
 	note_x[7] = FIXED_DEC(note8x,1) + FIXED_DEC(SCREEN_WIDEADD,4);
-	
-	//launch ConsoleZord's notes offscreen
-	note5x = 200;
-	note6x = 200;
-	note7x = 200;
-	note8x = 200;
-	//set bf's notes in the middle
-	note1x = -54;
-	note2x = -20;
-	note3x = 14; 
-	note4x = 48;
+
+	switch (stage.stage_id)
+	{
+		case StageId_2_1:
+		{
+			//launch ConsoleZord's notes offscreen
+			note5x = 200;
+			note6x = 200;
+			note7x = 200;
+			note8x = 200;
+			//set bf's notes in the middle
+			note1x = -54;
+			note2x = -20;
+			note3x = 14; 
+			note4x = 48;
+			break;
+		}
+		case StageId_3_1:
+		{
+			switch (stage.song_step)
+			{
+				case -20:
+				{
+					//launch all notes offscreen temporarily
+					note5x = 200;
+					note6x = 200;
+					note7x = 200;
+					note8x = 200;
+					note1x = 200;
+					note2x = 200;
+					note3x = 200; 
+					note4x = 200;
+					nobar = true;
+					break;
+				}
+				case 48:
+				{
+					note5x = -128;
+					break;
+				}
+				case 50:
+				{
+					note6x = -94;
+					break;
+				}
+				case 52:
+				{
+					note7x = -60;
+					break;
+				}
+				case 54:
+				{
+					note8x = -26;
+					break;
+				}
+				case 56:
+				{
+					note1x = 26;
+					break;
+				}
+				case 58:
+				{
+					note2x = 60;
+					break;
+				}
+				case 60:
+				{
+					note3x = 94;
+					break;
+				}
+				case 62:
+				{
+					note4x = 128;
+					break;
+				}
+				case 64:
+				{
+					nobar = false;
+					break;
+				}
+			}
+			break;
+		}
+		default:
+		{
+			note1x = 26;
+			note2x = 60;
+			note3x = 94;
+			note4x = 128;
+			note5x = -128;
+			note6x = -94;
+			note7x = -60;
+			note8x = -26;
+			break;
+		}
+	}
 }
 
 //Stage functions
@@ -1691,10 +1788,7 @@ void Stage_Tick(void)
 					break;
 			}
 
-			if (stage.stage_id == StageId_2_1)
-			{
-				Stage_Note_Move(); //fuck
-			}
+			Stage_Note_Move();
 			
 			#ifdef PSXF_NETWORK
 			if (stage.mode >= StageMode_Net1 && !Network_IsReady())
@@ -1883,7 +1977,9 @@ void Stage_Tick(void)
 				Stage_FocusCharacter(stage.opponent, FIXED_UNIT / 24);
 			else
 				Stage_FocusCharacter(stage.player, FIXED_UNIT / 24);
-			Stage_ScrollCamera();
+
+			if (stage.nocamscroll != true)
+				Stage_ScrollCamera();
 			
 			switch (stage.mode)
 			{
@@ -1993,83 +2089,86 @@ void Stage_Tick(void)
 				Stage_DrawStrum(i | 4, &note_src, &note_dst);
 				Stage_DrawTex(&stage.tex_hud0, &note_src, &note_dst, stage.bump);
 			}
-			
-			//Draw score
-			for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
+
+			if (nobar != true)
 			{
-				PlayerState *this = &stage.player_state[i];
-				
-				//Get string representing number
-				if (this->refresh_score)
+				//Draw score
+				for (int i = 0; i < ((stage.mode >= StageMode_2P) ? 2 : 1); i++)
 				{
-					if (this->score != 0)
-						sprintf(this->score_text, "%d0", this->score * stage.max_score / this->max_score);
-					else
-						strcpy(this->score_text, "0");
-					this->refresh_score = false;
-				}
-				
-				//Display score
-				RECT score_src = {80, 224, 40, 10};
-				RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-100,1) : FIXED_DEC(14,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(40,1), FIXED_DEC(10,1)};
-				if (stage.downscroll)
-					score_dst.y = -score_dst.y - score_dst.h;
-				
-				Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
-				
-				//Draw number
-				score_src.y = 240;
-				score_src.w = 8;
-				score_dst.x += FIXED_DEC(40,1);
-				score_dst.w = FIXED_DEC(8,1);
-				
-				for (const char *p = this->score_text; ; p++)
-				{
-					//Get character
-					char c = *p;
-					if (c == '\0')
-						break;
-					
-					//Draw character
-					if (c == '-')
-						score_src.x = 160;
-					else //Should be a number
-						score_src.x = 80 + ((c - '0') << 3);
-					
+					PlayerState *this = &stage.player_state[i];
+
+					//Get string representing number
+					if (this->refresh_score)
+					{
+						if (this->score != 0)
+							sprintf(this->score_text, "%d0", this->score * stage.max_score / this->max_score);
+						else
+							strcpy(this->score_text, "0");
+						this->refresh_score = false;
+					}
+
+					//Display score
+					RECT score_src = {80, 224, 40, 10};
+					RECT_FIXED score_dst = {(i ^ (stage.mode == StageMode_Swap)) ? FIXED_DEC(-100,1) : FIXED_DEC(14,1), (SCREEN_HEIGHT2 - 42) << FIXED_SHIFT, FIXED_DEC(40,1), FIXED_DEC(10,1)};
+					if (stage.downscroll)
+						score_dst.y = -score_dst.y - score_dst.h;
+
 					Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
-					
-					//Move character right
-					score_dst.x += FIXED_DEC(7,1);
+
+					//Draw number
+					score_src.y = 240;
+					score_src.w = 8;
+					score_dst.x += FIXED_DEC(40,1);
+					score_dst.w = FIXED_DEC(8,1);
+
+					for (const char *p = this->score_text; ; p++)
+					{
+						//Get character
+						char c = *p;
+						if (c == '\0')
+							break;
+
+						//Draw character
+						if (c == '-')
+							score_src.x = 160;
+						else //Should be a number
+							score_src.x = 80 + ((c - '0') << 3);
+
+						Stage_DrawTex(&stage.tex_hud0, &score_src, &score_dst, stage.bump);
+
+						//Move character right
+						score_dst.x += FIXED_DEC(7,1);
+					}
 				}
-			}
-			
-			if (stage.mode < StageMode_2P)
-			{
-				//Perform health checks
-				if (stage.player_state[0].health <= 0)
+
+				if (stage.mode < StageMode_2P)
 				{
-					//Player has died
-					stage.player_state[0].health = 0;
-					stage.state = StageState_Dead;
+					//Perform health checks
+					if (stage.player_state[0].health <= 0)
+					{
+						//Player has died
+						stage.player_state[0].health = 0;
+						stage.state = StageState_Dead;
+					}
+					if (stage.player_state[0].health > 20000)
+						stage.player_state[0].health = 20000;
+
+					//Draw health heads
+					Stage_DrawHealth(stage.player_state[0].health, stage.player->health_i,    1);
+					Stage_DrawHealth(stage.player_state[0].health, stage.opponent->health_i, -1);
+
+					//Draw health bar
+					RECT health_fill = {0, 0, 256 - (256 * stage.player_state[0].health / 20000), 8};
+					RECT health_back = {0, 8, 256, 8};
+					RECT_FIXED health_dst = {FIXED_DEC(-128,1), (SCREEN_HEIGHT2 - 32) << FIXED_SHIFT, 0, FIXED_DEC(8,1)};
+					if (stage.downscroll)
+						health_dst.y = -health_dst.y - health_dst.h;
+
+					health_dst.w = health_fill.w << FIXED_SHIFT;
+					Stage_DrawTexCol(&stage.tex_hud1, &health_fill, &health_dst, stage.bump, stage.opponent->hr / 2, stage.opponent->hg / 2, stage.opponent->hb / 2); //opponent
+					health_dst.w = health_back.w << FIXED_SHIFT;
+					Stage_DrawTexCol(&stage.tex_hud1, &health_back, &health_dst, stage.bump, stage.player->hr / 2, stage.player->hg / 2, stage.player->hb / 2); //player
 				}
-				if (stage.player_state[0].health > 20000)
-					stage.player_state[0].health = 20000;
-				
-				//Draw health heads
-				Stage_DrawHealth(stage.player_state[0].health, stage.player->health_i,    1);
-				Stage_DrawHealth(stage.player_state[0].health, stage.opponent->health_i, -1);
-				
-				//Draw health bar
-				RECT health_fill = {0, 0, 256 - (256 * stage.player_state[0].health / 20000), 8};
-				RECT health_back = {0, 8, 256, 8};
-				RECT_FIXED health_dst = {FIXED_DEC(-128,1), (SCREEN_HEIGHT2 - 32) << FIXED_SHIFT, 0, FIXED_DEC(8,1)};
-				if (stage.downscroll)
-					health_dst.y = -health_dst.y - health_dst.h;
-				
-				health_dst.w = health_fill.w << FIXED_SHIFT;
-				Stage_DrawTexCol(&stage.tex_hud1, &health_fill, &health_dst, stage.bump, stage.opponent->hr / 2, stage.opponent->hg / 2, stage.opponent->hb / 2); //opponent
-				health_dst.w = health_back.w << FIXED_SHIFT;
-				Stage_DrawTexCol(&stage.tex_hud1, &health_back, &health_dst, stage.bump, stage.player->hr / 2, stage.player->hg / 2, stage.player->hb / 2); //player
 			}
 			
 			//Hardcoded stage stuff
