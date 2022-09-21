@@ -16,23 +16,29 @@ SRCS = src/main.c \
        src/psx/audio.c \
        src/psx/pad.c \
        src/psx/timer.c \
-       src/psx/movie.c \
        src/stage/dummy.c \
        src/stage/week1.c \
        src/stage/vtown.c \
        src/stage/simp.c \
+       src/stage/factory.c \
+       src/stage/valley.c \
        src/animation.c \
        src/character.c \
        src/character/bf.c \
        src/character/speaker.c \
        src/character/dad.c \
        src/character/gf.c \
+       src/character/bfv.c \
+       src/character/vrage.c \
+       src/character/cancer.c \
        src/character/bfz.c \
        src/character/hand.c \
        src/character/zord.c \
        src/character/homer.c \
        src/character/x.c \
        src/character/green.c \
+       src/character/porky.c \
+       src/character/ness.c \
        src/character/clucky.c \
        src/character/chuck.c \
        src/character/sneed.c \

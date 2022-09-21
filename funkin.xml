@@ -96,6 +96,10 @@
 			<dir name = "sneed">
 				<file name = "simp.arc" type = "data" source = "iso/simp/back.arc"/>
 			</dir>
+
+			<dir name = "mother2">
+				<file name = "shack.arc" type = "data" source = "iso/valley/back.arc"/>
+			</dir>
 			
 			<!-- Character assets -->
 			<dir name = "char">
@@ -107,30 +111,6 @@
 				<!-- Dad assets -->
 				<file name = "dad.arc" type = "data" source = "iso/dad/main.arc"/>
 				
-				<!-- Spook assets -->
-				<file name = "spook.arc" type = "data" source = "iso/spook/main.arc"/>
-				
-				<!-- Pico assets -->
-				<file name = "pico.arc" type = "data" source = "iso/pico/main.arc"/>
-				
-				<!-- Mom assets -->
-				<file name = "mom.arc" type = "data" source = "iso/mom/main.arc"/>
-				<file name = "momhair.tim" type = "data" source = "iso/mom/hair.tim"/>
-				
-				<!-- Christmas assets -->
-				<file name = "xmasbf.arc" type = "data" source = "iso/bf/xmas.arc"/>
-				<file name = "xmasp.arc" type = "data" source = "iso/xmasp/main.arc"/>
-				
-				<!-- Senpai assets -->
-				<file name = "senpai.arc" type = "data" source = "iso/senpai/main.arc"/>
-				<file name = "senpaim.arc" type = "data" source = "iso/senpaim/main.arc"/>
-				<file name = "spirit.arc" type = "data" source = "iso/spirit/main.arc"/>
-				
-				<!-- Tankman Captain assets -->
-				<file name = "tank.arc" type = "data" source = "iso/tank/main.arc"/>
-				<file name = "tankugh.arc" type = "data" source = "iso/tank/ugh.arc"/>
-				<file name = "tankgood.arc" type = "data" source = "iso/tank/good.arc"/>
-				
 				<!-- Girlfriend assets -->
 				<file name = "gf.arc" type = "data" source = "iso/gf/main.arc"/>
 				<file name = "gftut.arc" type = "data" source = "iso/gf/tut.arc"/>
@@ -139,6 +119,10 @@
 				
 				<!-- Clucky assets -->
 				<file name = "clucky.arc" type = "data" source = "iso/clucky/main.arc"/>
+
+				<file name = "bfv.arc" type = "data" source = "iso/bfv/main.arc"/>
+				<file name = "vrage.arc" type = "data" source = "iso/vrage/main.arc"/>
+				<file name = "cancer.arc" type = "data" source = "iso/cancer/main.arc"/>
 
 				<file name = "bfz.arc" type = "data" source = "iso/bfz/main.arc"/>
 				<file name = "hand.arc" type = "data" source = "iso/hand/main.arc"/>
@@ -154,6 +138,10 @@
 				<file name = "brear.tim" type = "data" source = "iso/green/brear.tim"/>
 				<file name = "bfront.tim" type = "data" source = "iso/green/bfront.tim"/>
 				<file name = "sblast.tim" type = "data" source = "iso/green/sblast.tim"/>
+
+				<!-- EarthBound characters -->
+				<file name = "porky.arc" type = "data" source = "iso/porky/main.arc"/>
+				<file name = "ness.arc" type = "data" source = "iso/ness/main.arc"/>
 			</dir>
 			
 			<!-- Music -->
@@ -174,11 +162,6 @@
 				<dummy sectors="128"/>
 				<file name = "pork.xa" type = "xa" source = "iso/music/earthbound.xa"/>
 				<dummy sectors="128"/>
-			</dir>
-
-			<!-- Chungus -->
-			<dir name = "movie">
-				<file name = "ugh.str" type = "str" source = "iso/movie/ughm.str"/>
 			</dir>
 			
 			<!-- Dummy sectors -->

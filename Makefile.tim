@@ -29,6 +29,9 @@ all: \
 	iso/gf/weeb.arc \
 	iso/gf/speaker.tim \
 	iso/clucky/main.arc \
+	iso/bfv/main.arc \
+	iso/vrage/main.arc \
+	iso/cancer/main.arc \
 	iso/bfz/main.arc \
 	iso/hand/main.arc \
 	iso/zord/main.arc \
@@ -40,6 +43,8 @@ all: \
 	iso/green/brear.tim \
 	iso/green/bfront.tim \
 	iso/green/sblast.tim \
+	iso/porky/main.arc \
+	iso/ness/main.arc \
 	iso/week1/back.arc \
 	iso/week2/back.arc \
 	iso/week3/back.arc \
@@ -51,7 +56,8 @@ all: \
 	iso/week7/back.arc \
 	iso/vtown/back.arc \
 	iso/vtown/moot/hiro.arc \
-	iso/simp/back.arc
+	iso/simp/back.arc \
+	iso/valley/back.arc
 
 iso/%.tim: iso/%.png
 	tools/funkintimconv/funkintimconv $@ $<
@@ -105,6 +111,15 @@ iso/gf/weeb.arc: iso/gf/weeb0.tim iso/gf/weeb1.tim
 # Clucky
 iso/clucky/main.arc: iso/clucky/idle0.tim iso/clucky/idle1.tim iso/clucky/left.tim iso/clucky/down.tim iso/clucky/up.tim iso/clucky/right.tim
 
+# BF/v/
+iso/bfv/main.arc: iso/bfv/hit.tim
+
+#/v/-Tan Rage
+iso/vrage/main.arc: iso/vrage/idle0.tim iso/vrage/idle1.tim iso/vrage/idle2.tim iso/vrage/idle3.tim iso/vrage/left0.tim iso/vrage/left1.tim iso/vrage/left2.tim iso/vrage/down0.tim iso/vrage/down1.tim iso/vrage/down2.tim iso/vrage/up0.tim iso/vrage/up1.tim iso/vrage/up2.tim iso/vrage/right0.tim iso/vrage/right1.tim iso/vrage/right2.tim iso/vrage/row0.tim iso/vrage/row1.tim iso/vrage/row2.tim iso/vrage/fuck0.tim iso/vrage/fuck1.tim iso/vrage/fuck2.tim iso/vrage/fuck3.tim iso/vrage/fuck4.tim iso/vrage/fuck5.tim iso/vrage/fuck6.tim iso/vrage/fuck7.tim iso/vrage/fuck8.tim iso/vrage/fuck9.tim
+
+# Cancer Lord
+iso/cancer/main.arc: iso/cancer/idle0.tim iso/cancer/idle1.tim iso/cancer/idle2.tim iso/cancer/idle3.tim iso/cancer/left0.tim iso/cancer/left1.tim iso/cancer/down0.tim iso/cancer/down1.tim iso/cancer/up0.tim iso/cancer/up1.tim iso/cancer/up2.tim iso/cancer/right0.tim iso/cancer/right1.tim iso/cancer/right2.tim
+
 #bfz
 iso/bfz/main.arc: iso/bfz/hit.tim
 iso/hand/main.arc: iso/hand/idle0.tim iso/hand/idle0.tim iso/hand/idle1.tim iso/hand/idle2.tim iso/hand/leftb0.tim iso/hand/leftb1.tim iso/hand/leftb2.tim iso/hand/downb0.tim iso/hand/downb1.tim iso/hand/downb2.tim iso/hand/upb0.tim iso/hand/upb1.tim iso/hand/upb2.tim iso/hand/rightb0.tim iso/hand/rightb1.tim iso/hand/rightb2.tim iso/hand/left0.tim iso/hand/left1.tim iso/hand/left2.tim iso/hand/down0.tim iso/hand/down1.tim iso/hand/down2.tim iso/hand/up0.tim iso/hand/up1.tim iso/hand/up2.tim iso/hand/right0.tim iso/hand/right1.tim iso/hand/right2.tim
@@ -124,6 +139,12 @@ iso/x/main.arc: iso/x/idle0.tim iso/x/idle1.tim iso/x/idle2.tim iso/x/idle3.tim 
 
 # Green Biker Dude
 iso/green/main.arc: iso/green/hit0.tim iso/green/hit1.tim iso/green/hit2.tim
+
+# Porky Minch
+iso/porky/main.arc: iso/porky/idle0.tim iso/porky/idle1.tim iso/porky/left.tim iso/porky/down.tim iso/porky/up.tim iso/porky/right.tim iso/porky/hm.tim iso/porky/laf.tim iso/porky/lefta.tim iso/porky/downa.tim iso/porky/upa.tim iso/porky/righta.tim
+
+# Ness
+iso/ness/main.arc: iso/ness/idle.tim iso/ness/hit.tim iso/ness/right.tim iso/ness/swing0.tim iso/ness/swing1.tim iso/ness/ouch0.tim iso/ness/ouch1.tim
 
 # Week 1
 iso/week1/back.arc: iso/week1/back0.tim iso/week1/back1.tim
@@ -153,3 +174,6 @@ iso/vtown/moot/hiro.arc: iso/vtown/moot/hiro0.tim iso/vtown/moot/hiro1.tim iso/v
 
 # Sneed's (formerly Chuck's)
 iso/simp/back.arc: iso/simp/shop.tim iso/simp/field.tim
+
+# Valley
+iso/valley/back.arc: iso/valley/h0.tim iso/valley/h1.tim iso/valley/g0.tim iso/valley/g1.tim

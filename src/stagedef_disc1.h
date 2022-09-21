@@ -1,7 +1,7 @@
 	{ //StageId_1_1 (Vidyagaems)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(652,1),  FIXED_DEC(310,1)},
-		{Char_Dad_New, FIXED_DEC(437,1),  FIXED_DEC(306,1)},
+		{Char_BFV_New,    FIXED_DEC(649,1),  FIXED_DEC(248,1)},
+		{Char_vRage_New, FIXED_DEC(433,1),  FIXED_DEC(220,1)},
 		{NULL},
 		//{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
 		
@@ -18,7 +18,7 @@
 	{ //StageId_1_2 (Sage)
 		//Characters
 		{Char_BF_New,    FIXED_DEC(652,1),  FIXED_DEC(310,1)},
-		{Char_Dad_New, FIXED_DEC(437,1),  FIXED_DEC(306,1)},
+		{Char_vRage_New, FIXED_DEC(433,1),  FIXED_DEC(220,1)},
 		{NULL},
 		//{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
 		
@@ -52,11 +52,11 @@
 	{ //StageId_1_4 (Infinitrigger)
 		//Characters
 		{Char_BF_New, FIXED_DEC(60,1),  FIXED_DEC(100,1)},
-		{Char_GF_New,  FIXED_DEC(0,1),  FIXED_DEC(-15,1)}, //TODO
+		{Char_CancerLord_New,  FIXED_DEC(-145,1),  FIXED_DEC(-36,1)},
 		{NULL,           FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
 		
 		//Stage background
-		Back_Week1_New,
+		Back_Dummy_New,
 		
 		//Song info
 		{FIXED_DEC(32,10),FIXED_DEC(32,10),FIXED_DEC(32,10)},
@@ -127,7 +127,7 @@
 		//{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
 		
 		//Stage background
-		Back_Dummy_New,
+		Back_Factory_New,
 		
 		//Song info
 		{FIXED_DEC(19,10),FIXED_DEC(23,10),FIXED_DEC(25,10)},
@@ -138,18 +138,35 @@
 	},
 	{ //StageId_3_2 (Konbanwa)
 		//Characters
-		{Char_BF_New,    FIXED_DEC(652,1),  FIXED_DEC(310,1)},
-		{Char_Dad_New, FIXED_DEC(437,1),  FIXED_DEC(306,1)},
+		{Char_Ness_New,    FIXED_DEC(601,1),  FIXED_DEC(423,1)},
+		{Char_Porky_New, FIXED_DEC(400,1),  FIXED_DEC(416,1)},
 		{NULL},
 		//{Char_GF_New,     FIXED_DEC(0,1),  FIXED_DEC(-10,1)},
 		
 		//Stage background
-		Back_Dummy_New,
+		Back_Valley_New,
 		
 		//Song info
-		{FIXED_DEC(19,10),FIXED_DEC(23,10),FIXED_DEC(25,10)},
+		{FIXED_DEC(31,10),FIXED_DEC(31,10),FIXED_DEC(31,10)},
 		3, 2,
 		XA_Konbanwa, 0,
 		
 		StageId_3_2, 0,
 	},
+
+	{
+		//characters
+		{NULL},
+		{NULL},
+		{NULL},
+
+		//Stage background
+		Back_Dummy_New,
+
+		//Song info
+		{FIXED_DEC(31,10),FIXED_DEC(31,10),FIXED_DEC(31,10)},
+		3, 2,
+		XA_Konbanwa, 0,
+		
+		StageId_4_1, 0,
+	}

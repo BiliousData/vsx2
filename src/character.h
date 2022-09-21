@@ -25,7 +25,8 @@ typedef enum
 	CharAnim_Down,  CharAnim_DownAlt,
 	CharAnim_Up,    CharAnim_UpAlt,
 	CharAnim_Right, CharAnim_RightAlt,
-	CharAnim_FUCK,  CharAnim_IdleAlt,
+	CharAnim_Extra1,  CharAnim_Extra2,
+	CharAnim_Extra3,  CharAnim_Extra4,
 	
 	CharAnim_Max //Max standard/shared animation
 } CharAnim;
@@ -60,6 +61,8 @@ typedef struct Character
 
 	//healthbar colors
 	u16 hr, hg, hb;
+	//alt anim stuff
+	boolean forcealt;
 } Character;
 
 //Character functions

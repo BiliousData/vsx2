@@ -49,6 +49,7 @@ typedef enum
 	StageId_2_3,
 	StageId_3_1,
 	StageId_3_2,
+	StageId_4_1,
 	
 	StageId_Max
 } StageId;
@@ -241,6 +242,8 @@ typedef struct
 	u8 debug;
 
 	boolean nocamscroll;
+
+	boolean noregen; //konbanwa no health regen
 } Stage;
 
 extern Stage stage;

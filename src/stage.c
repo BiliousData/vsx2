@@ -12,7 +12,6 @@
 #include "pad.h"
 #include "main.h"
 #include "random.h"
-#include "movie.h"
 #include "network.h"
 
 #include "menu.h"
@@ -23,7 +22,7 @@
 #include "object/splash.h"
 
 //Stage constants
-//#define STAGE_PERFECT //Play all notes perfectly
+#define STAGE_PERFECT //Play all notes perfectly
 //#define STAGE_NOHUD //Disable the HUD
 
 //#define STAGE_FREECAM //Freecam
@@ -67,6 +66,9 @@ static const u8 note_anims[4][3] = {
 #include "character/dad.h"
 #include "character/gf.h"
 #include "character/clucky.h"
+#include "character/bfv.h"
+#include "character/vrage.h"
+#include "character/cancer.h"
 #include "character/bfz.h"
 #include "character/hand.h"
 #include "character/zord.h"
@@ -75,11 +77,15 @@ static const u8 note_anims[4][3] = {
 #include "character/sneed.h"
 #include "character/x.h"
 #include "character/green.h"
+#include "character/porky.h"
+#include "character/ness.h"
 
 #include "stage/dummy.h"
 #include "stage/week1.h"
 #include "stage/vtown.h"
 #include "stage/simp.h"
+#include "stage/factory.h"
+#include "stage/valley.h"
 
 static const StageDef stage_defs[StageId_Max] = {
 	#include "stagedef_disc1.h"
@@ -138,6 +144,15 @@ static void Stage_FocusCharacter(Character *ch, fixed_t div)
 	stage.camera.tx = ch->x + ch->focus_x;
 	stage.camera.ty = ch->y + ch->focus_y;
 	stage.camera.tz = ch->focus_zoom;
+	stage.camera.td = div;
+}
+
+static void Stage_CustomFocus(fixed_t x, fixed_t y, fixed_t zoom, fixed_t div)
+{
+	//yeah
+	stage.camera.tx = x;
+	stage.camera.ty = y;
+	stage.camera.tz = zoom;
 	stage.camera.td = div;
 }
 
@@ -315,7 +330,8 @@ static u8 Stage_HitNote(PlayerState *this, u8 type, fixed_t offset, boolean sage
 	
 	//Restore vocals and health
 	Stage_StartVocal();
-	this->health += 230;
+	if (stage.noregen == false) //no health regeneration on konbanwa
+		this->health += 230;
 	
 	//Create combo object telling of our combo
 	Obj_Combo *combo = Obj_Combo_New(
@@ -397,8 +413,13 @@ static void Stage_NoteCheck(PlayerState *this, u8 type)
 			}
 			else
 			{
-				this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
+				if (this->character->forcealt == true)
+					this->character->set_anim(this->character, note_anims[type & 0x3][1]);
+				else
+					this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
 			}
+
+			
 			u8 hit_type = Stage_HitNote(this, type, stage.note_scroll - note_fp, 0);
 			this->arrow_hitan[type & 0x3] = stage.step_time;
 			
@@ -593,7 +614,8 @@ static void Stage_SustainCheck(PlayerState *this, u8 type)
 		this->character->set_anim(this->character, note_anims[type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0]);
 		
 		Stage_StartVocal();
-		this->health += 230;
+		if (stage.noregen == false)
+			this->health += 230;
 		this->arrow_hitan[type & 0x3] = stage.step_time;
 			
 		#ifdef PSXF_NETWORK
@@ -627,6 +649,13 @@ static void Stage_SustainCheck(PlayerState *this, u8 type)
 
 static void Stage_ProcessPlayer(PlayerState *this, Pad *pad, boolean playing)
 {
+	if (pad_state_2.press & PAD_SELECT)
+	{
+		if (stage.debug < 5)
+		    stage.debug += 1;
+		else 
+		    stage.debug = 0;
+	}
 	//Handle player note presses
 	#ifndef STAGE_PERFECT
 		if (playing)
@@ -653,14 +682,6 @@ static void Stage_ProcessPlayer(PlayerState *this, Pad *pad, boolean playing)
 				Stage_NoteCheck(this, 2 | i);
 			if (this->pad_press & INPUT_RIGHT)
 				Stage_NoteCheck(this, 3 | i);
-
-			if (this->pad_press & DEBUG_SWITCH)
-			{
-				if (stage.debug < 5)
-				    stage.debug += 1;
-				else 
-				    stage.debug = 0;
-			}
 		}
 		else
 		{
@@ -1129,14 +1150,20 @@ static void Stage_LoadPlayer(void)
 {
 	//Load player character
 	Character_Free(stage.player);
-	stage.player = stage.stage_def->pchar.new(stage.stage_def->pchar.x, stage.stage_def->pchar.y);
+	if (stage.stage_def->pchar.new != NULL)
+		stage.player = stage.stage_def->pchar.new(stage.stage_def->pchar.x, stage.stage_def->pchar.y);
+	else
+		stage.player = NULL;
 }
 
 static void Stage_LoadOpponent(void)
 {
 	//Load opponent character
 	Character_Free(stage.opponent);
-	stage.opponent = stage.stage_def->ochar.new(stage.stage_def->ochar.x, stage.stage_def->ochar.y);
+	if (stage.stage_def->ochar.new != NULL)
+		stage.opponent = stage.stage_def->ochar.new(stage.stage_def->ochar.x, stage.stage_def->ochar.y);
+	else
+		stage.opponent = NULL;
 }
 
 static void Stage_LoadGirlfriend(void)
@@ -1967,16 +1994,106 @@ void Stage_Tick(void)
 					stage.sbump = FIXED_DEC(103,100);
 					if (stage.has_ebola == 1)
 					{
-						stage.player_state[0].health -= 50 * stage.ebola_multiplier;
+						stage.player_state[0].health -= 50 * stage.ebola_multiplier; //every beat decreases health by 50, multiplied by how many ebola notes you have hit
 					}
 				}
 			}
 			
-			//Scroll camera
-			if (stage.cur_section->flag & SECTION_FLAG_OPPFOCUS)
-				Stage_FocusCharacter(stage.opponent, FIXED_UNIT / 24);
+			//Scroll camera if not konbanwa (it uses custom focusing, not relying on sections)
+			if (stage.stage_id != StageId_3_2)
+			{
+				if (stage.cur_section->flag & SECTION_FLAG_OPPFOCUS)
+					Stage_FocusCharacter(stage.opponent, FIXED_UNIT / 24);
+				else
+					Stage_FocusCharacter(stage.player, FIXED_UNIT / 24);
+			}
 			else
-				Stage_FocusCharacter(stage.player, FIXED_UNIT / 24);
+			{
+				switch (stage.song_step)
+				{
+					case 0:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 24:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 48:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 60:
+						Stage_CustomFocus(FIXED_DEC(545,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Double focus
+						break;
+					case 72:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 96:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 120:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 144:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 168:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 193:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 216:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 240:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 252:
+						Stage_CustomFocus(FIXED_DEC(545,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Double focus
+						break;
+					case 264:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 288:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 336:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(1,1), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 383:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(13,10), FIXED_UNIT / 24); //Porky focus zoomed in
+						break;
+					case 392:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 424:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 456:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 488:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 520:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 552:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 584:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Porky focus
+						break;
+					case 616:
+						Stage_CustomFocus(FIXED_DEC(637,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Ness focus
+						break;
+					case 662:
+						Stage_CustomFocus(FIXED_DEC(545,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Double focus
+						break;
+					case 680:
+						Stage_CustomFocus(FIXED_DEC(461,1), FIXED_DEC(458,1), FIXED_DEC(11,10), FIXED_UNIT / 24); //Porky focus
+						break;
+				}
+			}
 
 			if (stage.nocamscroll != true)
 				Stage_ScrollCamera();
@@ -2003,10 +2120,20 @@ void Stage_Tick(void)
 						{
 							//Opponent hits note
 							Stage_StartVocal();
-							if (note->type & NOTE_FLAG_SUSTAIN)
-								opponent_snote = note_anims[note->type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0];
+							if (stage.opponent->forcealt == true)
+							{
+								if (note->type & NOTE_FLAG_SUSTAIN)
+									opponent_snote = note_anims[note->type & 0x3][1];
+								else
+									opponent_anote = note_anims[note->type & 0x3][1];
+							}
 							else
-								opponent_anote = note_anims[note->type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0];
+							{
+								if (note->type & NOTE_FLAG_SUSTAIN)
+									opponent_snote = note_anims[note->type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0];
+								else
+									opponent_anote = note_anims[note->type & 0x3][(note->type & NOTE_FLAG_ALT_ANIM) != 0];
+							}
 							note->type |= NOTE_FLAG_HIT;
 						}
 					}
