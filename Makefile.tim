@@ -8,56 +8,36 @@ all: \
 	iso/stage/hud1.tim \
 	iso/stage/hud1win.tim \
 	iso/stage/hud0weeb.tim \
-	iso/bf/main.arc \
-	iso/bf/dead.arc \
-	iso/bf/weeb.arc \
-	iso/dad/main.arc \
-	iso/spook/main.arc \
-	iso/pico/main.arc \
-	iso/mom/main.arc \
-	iso/mom/hair.tim \
-	iso/bf/xmas.arc \
-	iso/xmasp/main.arc \
-	iso/senpai/main.arc \
-	iso/senpaim/main.arc \
-	iso/spirit/main.arc \
-	iso/tank/main.arc \
-	iso/tank/ugh.arc \
-	iso/tank/good.arc \
-	iso/gf/main.arc \
-	iso/gf/tut.arc \
-	iso/gf/weeb.arc \
-	iso/gf/speaker.tim \
-	iso/clucky/main.arc \
-	iso/bfv/main.arc \
-	iso/vrage/main.arc \
-	iso/cancer/main.arc \
-	iso/bfz/main.arc \
-	iso/hand/main.arc \
-	iso/zord/main.arc \
-	iso/sneed/main.arc \
-	iso/chuck/main.arc \
-	iso/homer/main.arc \
-	iso/x/main.arc \
-	iso/green/main.arc \
-	iso/green/brear.tim \
-	iso/green/bfront.tim \
-	iso/green/sblast.tim \
-	iso/porky/main.arc \
-	iso/ness/main.arc \
-	iso/week1/back.arc \
-	iso/week2/back.arc \
-	iso/week3/back.arc \
-	iso/week4/back.arc \
-	iso/week4/hench.arc \
-	iso/week5/back.arc \
-	iso/week6/back.arc \
-	iso/week6/back3.tim \
-	iso/week7/back.arc \
-	iso/vtown/back.arc \
-	iso/vtown/moot/hiro.arc \
-	iso/simp/back.arc \
-	iso/valley/back.arc
+	iso/characters/bf/main.arc \
+	iso/characters/bf/dead.arc \
+	iso/characters/bf/weeb.arc \
+	iso/characters/dad/main.arc \
+	iso/characters/bf/xmas.arc \
+	iso/characters/gf/main.arc \
+	iso/characters/gf/tut.arc \
+	iso/characters/gf/weeb.arc \
+	iso/characters/gf/speaker.tim \
+	iso/characters/bfv/main.arc \
+	iso/characters/vrage/main.arc \
+	iso/characters/cancer/main.arc \
+	iso/characters/bfz/main.arc \
+	iso/characters/hand/main.arc \
+	iso/characters/zord/main.arc \
+	iso/characters/sneed/main.arc \
+	iso/characters/chuck/main.arc \
+	iso/characters/homer/main.arc \
+	iso/characters/x/main.arc \
+	iso/characters/green/main.arc \
+	iso/characters/green/brear.tim \
+	iso/characters/green/bfront.tim \
+	iso/characters/green/sblast.tim \
+	iso/characters/porky/main.arc \
+	iso/characters/ness/main.arc \
+	iso/stages/week1/back.arc \
+	iso/stages/vtown/back.arc \
+	iso/stages/vtown/moot/hiro.arc \
+	iso/stages/simp/back.arc \
+	iso/stages/valley/back.arc
 
 iso/%.tim: iso/%.png
 	tools/funkintimconv/funkintimconv $@ $<
@@ -69,111 +49,62 @@ iso/%.arc:
 iso/menu/menu.arc: iso/menu/back.tim iso/menu/ng.tim iso/menu/story.tim iso/menu/title.tim
 
 # BF
-iso/bf/main.arc: iso/bf/bf0.tim iso/bf/bf1.tim iso/bf/bf2.tim iso/bf/bf3.tim iso/bf/bf4.tim iso/bf/bf5.tim iso/bf/bf6.tim iso/bf/dead0.tim
-iso/bf/dead.arc: iso/bf/dead1.tim iso/bf/dead2.tim iso/bf/retry.tim
-iso/bf/weeb.arc: iso/bf/weeb0.tim iso/bf/weeb1.tim
+iso/characters/bf/main.arc: iso/characters/bf/bf0.tim iso/characters/bf/bf1.tim iso/characters/bf/bf2.tim iso/characters/bf/bf3.tim iso/characters/bf/bf4.tim iso/characters/bf/bf5.tim iso/characters/bf/bf6.tim iso/characters/bf/dead0.tim
+iso/characters/bf/dead.arc: iso/characters/bf/dead1.tim iso/characters/bf/dead2.tim iso/characters/bf/retry.tim
+iso/characters/bf/weeb.arc: iso/characters/bf/weeb0.tim iso/characters/bf/weeb1.tim
 
 # Dad
-iso/dad/main.arc: iso/dad/idle0.tim iso/dad/idle1.tim iso/dad/left.tim iso/dad/down.tim iso/dad/up.tim iso/dad/right.tim
-
-# Spook
-iso/spook/main.arc: iso/spook/idle0.tim iso/spook/idle1.tim iso/spook/idle2.tim iso/spook/left.tim iso/spook/down.tim iso/spook/up.tim iso/spook/right.tim
-
-# Pico
-iso/pico/main.arc: iso/pico/idle.tim iso/pico/hit0.tim iso/pico/hit1.tim
-
-# Mom
-iso/mom/main.arc: iso/mom/idle0.tim iso/mom/idle1.tim iso/mom/left.tim iso/mom/down.tim iso/mom/up.tim iso/mom/right.tim
-
-# Xmas BF
-iso/bf/xmas.arc: iso/bf/xmasbf0.tim iso/bf/xmasbf1.tim iso/bf/xmasbf2.tim iso/bf/xmasbf3.tim iso/bf/dead0.tim
-
-# Xmas Parents
-iso/xmasp/main.arc: iso/xmasp/idle0.tim iso/xmasp/idle1.tim iso/xmasp/idle2.tim iso/xmasp/idle3.tim iso/xmasp/lefta0.tim iso/xmasp/lefta1.tim iso/xmasp/leftb0.tim iso/xmasp/leftb1.tim iso/xmasp/downa0.tim iso/xmasp/downa1.tim iso/xmasp/downb0.tim iso/xmasp/downb1.tim iso/xmasp/upa0.tim iso/xmasp/upa1.tim iso/xmasp/upb0.tim iso/xmasp/upb1.tim iso/xmasp/righta0.tim iso/xmasp/righta1.tim iso/xmasp/rightb0.tim iso/xmasp/rightb1.tim
-
-# Senpai
-iso/senpai/main.arc: iso/senpai/senpai0.tim iso/senpai/senpai1.tim
-iso/senpaim/main.arc: iso/senpaim/senpai0.tim iso/senpaim/senpai1.tim
-
-# Spirit
-iso/spirit/main.arc: iso/spirit/spirit0.tim iso/spirit/spirit1.tim
-
-# Tank
-iso/tank/main.arc: iso/tank/idle0.tim iso/tank/idle1.tim iso/tank/left.tim iso/tank/down.tim iso/tank/up.tim iso/tank/right.tim
-iso/tank/ugh.arc: iso/tank/ugh0.tim iso/tank/ugh1.tim
-iso/tank/good.arc: iso/tank/good0.tim iso/tank/good1.tim iso/tank/good2.tim iso/tank/good3.tim
+iso/characters/dad/main.arc: iso/characters/dad/idle0.tim iso/characters/dad/idle1.tim iso/characters/dad/left.tim iso/characters/dad/down.tim iso/characters/dad/up.tim iso/characters/dad/right.tim
 
 # GF
-iso/gf/main.arc: iso/gf/gf0.tim iso/gf/gf1.tim iso/gf/gf2.tim
-iso/gf/tut.arc: iso/gf/tut0.tim iso/gf/tut1.tim
-iso/gf/weeb.arc: iso/gf/weeb0.tim iso/gf/weeb1.tim
-
-# Clucky
-iso/clucky/main.arc: iso/clucky/idle0.tim iso/clucky/idle1.tim iso/clucky/left.tim iso/clucky/down.tim iso/clucky/up.tim iso/clucky/right.tim
+iso/characters/gf/main.arc: iso/characters/gf/gf0.tim iso/characters/gf/gf1.tim iso/characters/gf/gf2.tim
+iso/characters/gf/tut.arc: iso/characters/gf/tut0.tim iso/characters/gf/tut1.tim
+iso/characters/gf/weeb.arc: iso/characters/gf/weeb0.tim iso/characters/gf/weeb1.tim
 
 # BF/v/
-iso/bfv/main.arc: iso/bfv/hit.tim
+iso/characters/bfv/main.arc: iso/characters/bfv/hit.tim
 
 #/v/-Tan Rage
-iso/vrage/main.arc: iso/vrage/idle0.tim iso/vrage/idle1.tim iso/vrage/idle2.tim iso/vrage/idle3.tim iso/vrage/left0.tim iso/vrage/left1.tim iso/vrage/left2.tim iso/vrage/down0.tim iso/vrage/down1.tim iso/vrage/down2.tim iso/vrage/up0.tim iso/vrage/up1.tim iso/vrage/up2.tim iso/vrage/right0.tim iso/vrage/right1.tim iso/vrage/right2.tim iso/vrage/row0.tim iso/vrage/row1.tim iso/vrage/row2.tim iso/vrage/fuck0.tim iso/vrage/fuck1.tim iso/vrage/fuck2.tim iso/vrage/fuck3.tim iso/vrage/fuck4.tim iso/vrage/fuck5.tim iso/vrage/fuck6.tim iso/vrage/fuck7.tim iso/vrage/fuck8.tim iso/vrage/fuck9.tim
+iso/characters/vrage/main.arc: iso/characters/vrage/idle0.tim iso/characters/vrage/idle1.tim iso/characters/vrage/idle2.tim iso/characters/vrage/idle3.tim iso/characters/vrage/left0.tim iso/characters/vrage/left1.tim iso/characters/vrage/left2.tim iso/characters/vrage/down0.tim iso/characters/vrage/down1.tim iso/characters/vrage/down2.tim iso/characters/vrage/up0.tim iso/characters/vrage/up1.tim iso/characters/vrage/up2.tim iso/characters/vrage/right0.tim iso/characters/vrage/right1.tim iso/characters/vrage/right2.tim iso/characters/vrage/row0.tim iso/characters/vrage/row1.tim iso/characters/vrage/row2.tim iso/characters/vrage/fuck0.tim iso/characters/vrage/fuck1.tim iso/characters/vrage/fuck2.tim iso/characters/vrage/fuck3.tim iso/characters/vrage/fuck4.tim iso/characters/vrage/fuck5.tim iso/characters/vrage/fuck6.tim iso/characters/vrage/fuck7.tim iso/characters/vrage/fuck8.tim iso/characters/vrage/fuck9.tim
 
 # Cancer Lord
-iso/cancer/main.arc: iso/cancer/idle0.tim iso/cancer/idle1.tim iso/cancer/idle2.tim iso/cancer/idle3.tim iso/cancer/left0.tim iso/cancer/left1.tim iso/cancer/down0.tim iso/cancer/down1.tim iso/cancer/up0.tim iso/cancer/up1.tim iso/cancer/up2.tim iso/cancer/right0.tim iso/cancer/right1.tim iso/cancer/right2.tim
+iso/characters/cancer/main.arc: iso/characters/cancer/idle0.tim iso/characters/cancer/idle1.tim iso/characters/cancer/idle2.tim iso/characters/cancer/idle3.tim iso/characters/cancer/left0.tim iso/characters/cancer/left1.tim iso/characters/cancer/down0.tim iso/characters/cancer/down1.tim iso/characters/cancer/up0.tim iso/characters/cancer/up1.tim iso/characters/cancer/up2.tim iso/characters/cancer/right0.tim iso/characters/cancer/right1.tim iso/characters/cancer/right2.tim
 
 #bfz
-iso/bfz/main.arc: iso/bfz/hit.tim
-iso/hand/main.arc: iso/hand/idle0.tim iso/hand/idle0.tim iso/hand/idle1.tim iso/hand/idle2.tim iso/hand/leftb0.tim iso/hand/leftb1.tim iso/hand/leftb2.tim iso/hand/downb0.tim iso/hand/downb1.tim iso/hand/downb2.tim iso/hand/upb0.tim iso/hand/upb1.tim iso/hand/upb2.tim iso/hand/rightb0.tim iso/hand/rightb1.tim iso/hand/rightb2.tim iso/hand/left0.tim iso/hand/left1.tim iso/hand/left2.tim iso/hand/down0.tim iso/hand/down1.tim iso/hand/down2.tim iso/hand/up0.tim iso/hand/up1.tim iso/hand/up2.tim iso/hand/right0.tim iso/hand/right1.tim iso/hand/right2.tim
+iso/characters/bfz/main.arc: iso/characters/bfz/hit.tim
+iso/characters/hand/main.arc: iso/characters/hand/idle0.tim iso/characters/hand/idle0.tim iso/characters/hand/idle1.tim iso/characters/hand/idle2.tim iso/characters/hand/leftb0.tim iso/characters/hand/leftb1.tim iso/characters/hand/leftb2.tim iso/characters/hand/downb0.tim iso/characters/hand/downb1.tim iso/characters/hand/downb2.tim iso/characters/hand/upb0.tim iso/characters/hand/upb1.tim iso/characters/hand/upb2.tim iso/characters/hand/rightb0.tim iso/characters/hand/rightb1.tim iso/characters/hand/rightb2.tim iso/characters/hand/left0.tim iso/characters/hand/left1.tim iso/characters/hand/left2.tim iso/characters/hand/down0.tim iso/characters/hand/down1.tim iso/characters/hand/down2.tim iso/characters/hand/up0.tim iso/characters/hand/up1.tim iso/characters/hand/up2.tim iso/characters/hand/right0.tim iso/characters/hand/right1.tim iso/characters/hand/right2.tim
 
 # Consolezord
-iso/zord/main.arc: iso/zord/idle0.tim iso/zord/idle1.tim iso/zord/idle2.tim iso/zord/idle3.tim iso/zord/idle4.tim iso/zord/idle5.tim iso/zord/idle6.tim iso/zord/left0.tim iso/zord/left1.tim iso/zord/left2.tim iso/zord/left3.tim iso/zord/lefta0.tim iso/zord/lefta1.tim iso/zord/lefta2.tim iso/zord/lefta3.tim iso/zord/down0.tim iso/zord/down1.tim iso/zord/down2.tim iso/zord/down3.tim iso/zord/downa0.tim iso/zord/downa1.tim iso/zord/downa2.tim iso/zord/downa3.tim iso/zord/up0.tim iso/zord/up1.tim iso/zord/up2.tim iso/zord/up3.tim iso/zord/upalt0.tim iso/zord/upalt1.tim iso/zord/upalt2.tim iso/zord/upalt3.tim iso/zord/right0.tim iso/zord/right1.tim iso/zord/right2.tim iso/zord/right3.tim iso/zord/righta0.tim iso/zord/righta1.tim iso/zord/righta2.tim iso/zord/righta3.tim
+iso/characters/zord/main.arc: iso/characters/zord/idle0.tim iso/characters/zord/idle1.tim iso/characters/zord/idle2.tim iso/characters/zord/idle3.tim iso/characters/zord/idle4.tim iso/characters/zord/idle5.tim iso/characters/zord/idle6.tim iso/characters/zord/left0.tim iso/characters/zord/left1.tim iso/characters/zord/left2.tim iso/characters/zord/left3.tim iso/characters/zord/lefta0.tim iso/characters/zord/lefta1.tim iso/characters/zord/lefta2.tim iso/characters/zord/lefta3.tim iso/characters/zord/down0.tim iso/characters/zord/down1.tim iso/characters/zord/down2.tim iso/characters/zord/down3.tim iso/characters/zord/downa0.tim iso/characters/zord/downa1.tim iso/characters/zord/downa2.tim iso/characters/zord/downa3.tim iso/characters/zord/up0.tim iso/characters/zord/up1.tim iso/characters/zord/up2.tim iso/characters/zord/up3.tim iso/characters/zord/upalt0.tim iso/characters/zord/upalt1.tim iso/characters/zord/upalt2.tim iso/characters/zord/upalt3.tim iso/characters/zord/right0.tim iso/characters/zord/right1.tim iso/characters/zord/right2.tim iso/characters/zord/right3.tim iso/characters/zord/righta0.tim iso/characters/zord/righta1.tim iso/characters/zord/righta2.tim iso/characters/zord/righta3.tim
 
 # Chuck & Sneed
-iso/sneed/main.arc: iso/sneed/idle0.tim iso/sneed/idle1.tim iso/sneed/idle2.tim iso/sneed/left.tim iso/sneed/down0.tim iso/sneed/down1.tim iso/sneed/up0.tim iso/sneed/up1.tim iso/sneed/right.tim
-iso/chuck/main.arc: iso/chuck/idle0.tim iso/chuck/idle1.tim iso/chuck/idle2.tim iso/chuck/idle3.tim iso/chuck/idle4.tim iso/chuck/idle5.tim iso/chuck/left0.tim iso/chuck/left1.tim iso/chuck/left2.tim iso/chuck/down0.tim iso/chuck/down1.tim iso/chuck/down2.tim iso/chuck/up0.tim iso/chuck/up1.tim iso/chuck/up2.tim iso/chuck/right0.tim iso/chuck/right1.tim iso/chuck/right2.tim
+iso/characters/sneed/main.arc: iso/characters/sneed/idle0.tim iso/characters/sneed/idle1.tim iso/characters/sneed/idle2.tim iso/characters/sneed/left.tim iso/characters/sneed/down0.tim iso/characters/sneed/down1.tim iso/characters/sneed/up0.tim iso/characters/sneed/up1.tim iso/characters/sneed/right.tim
+iso/characters/chuck/main.arc: iso/characters/chuck/idle0.tim iso/characters/chuck/idle1.tim iso/characters/chuck/idle2.tim iso/characters/chuck/idle3.tim iso/characters/chuck/idle4.tim iso/characters/chuck/idle5.tim iso/characters/chuck/left0.tim iso/characters/chuck/left1.tim iso/characters/chuck/left2.tim iso/characters/chuck/down0.tim iso/characters/chuck/down1.tim iso/characters/chuck/down2.tim iso/characters/chuck/up0.tim iso/characters/chuck/up1.tim iso/characters/chuck/up2.tim iso/characters/chuck/right0.tim iso/characters/chuck/right1.tim iso/characters/chuck/right2.tim
 
 # Homer Simpson
-iso/homer/main.arc: iso/homer/idle0.tim iso/homer/idle1.tim iso/homer/left.tim iso/homer/down.tim iso/homer/up.tim iso/homer/right.tim
+iso/characters/homer/main.arc: iso/characters/homer/idle0.tim iso/characters/homer/idle1.tim iso/characters/homer/left.tim iso/characters/homer/down.tim iso/characters/homer/up.tim iso/characters/homer/right.tim
 
 # Mega Man X
-iso/x/main.arc: iso/x/idle0.tim iso/x/idle1.tim iso/x/idle2.tim iso/x/idle3.tim iso/x/idle4.tim iso/x/left0.tim iso/x/left1.tim iso/x/left2.tim iso/x/down0.tim iso/x/down1.tim iso/x/down2.tim iso/x/up0.tim iso/x/up1.tim iso/x/up2.tim iso/x/right0.tim iso/x/right1.tim iso/x/right2.tim
+iso/characters/x/main.arc: iso/characters/x/idle0.tim iso/characters/x/idle1.tim iso/characters/x/idle2.tim iso/characters/x/idle3.tim iso/characters/x/idle4.tim iso/characters/x/left0.tim iso/characters/x/left1.tim iso/characters/x/left2.tim iso/characters/x/down0.tim iso/characters/x/down1.tim iso/characters/x/down2.tim iso/characters/x/up0.tim iso/characters/x/up1.tim iso/characters/x/up2.tim iso/characters/x/right0.tim iso/characters/x/right1.tim iso/characters/x/right2.tim
 
 # Green Biker Dude
-iso/green/main.arc: iso/green/hit0.tim iso/green/hit1.tim iso/green/hit2.tim
+iso/characters/green/main.arc: iso/characters/green/hit0.tim iso/characters/green/hit1.tim iso/characters/green/hit2.tim
 
 # Porky Minch
-iso/porky/main.arc: iso/porky/idle0.tim iso/porky/idle1.tim iso/porky/left.tim iso/porky/down.tim iso/porky/up.tim iso/porky/right.tim iso/porky/hm.tim iso/porky/laf.tim iso/porky/lefta.tim iso/porky/downa.tim iso/porky/upa.tim iso/porky/righta.tim
+iso/characters/porky/main.arc: iso/characters/porky/idle0.tim iso/characters/porky/idle1.tim iso/characters/porky/left.tim iso/characters/porky/down.tim iso/characters/porky/up.tim iso/characters/porky/right.tim iso/characters/porky/hm.tim iso/characters/porky/laf.tim iso/characters/porky/lefta.tim iso/characters/porky/downa.tim iso/characters/porky/upa.tim iso/characters/porky/righta.tim
 
 # Ness
-iso/ness/main.arc: iso/ness/idle.tim iso/ness/hit.tim iso/ness/right.tim iso/ness/swing0.tim iso/ness/swing1.tim iso/ness/ouch0.tim iso/ness/ouch1.tim
+iso/characters/ness/main.arc: iso/characters/ness/idle.tim iso/characters/ness/hit.tim iso/characters/ness/right.tim iso/characters/ness/swing0.tim iso/characters/ness/swing1.tim iso/characters/ness/ouch0.tim iso/characters/ness/ouch1.tim
 
 # Week 1
-iso/week1/back.arc: iso/week1/back0.tim iso/week1/back1.tim
-
-# Week 2
-iso/week2/back.arc: iso/week2/back0.tim iso/week2/back1.tim iso/week2/back2.tim
-
-# Week 3
-iso/week3/back.arc: iso/week3/back0.tim iso/week3/back1.tim iso/week3/back2.tim iso/week3/back3.tim iso/week3/back4.tim iso/week3/back5.tim
-
-# Week 4
-iso/week4/back.arc: iso/week4/back0.tim iso/week4/back1.tim iso/week4/back2.tim iso/week4/back3.tim
-iso/week4/hench.arc: iso/week4/hench0.tim iso/week4/hench1.tim
-
-# Week 5
-iso/week5/back.arc: iso/week5/back0.tim iso/week5/back1.tim iso/week5/back2.tim iso/week5/back3.tim iso/week5/back4.tim iso/week5/back5.tim
-
-# Week6
-iso/week6/back.arc: iso/week6/back0.tim iso/week6/back1.tim iso/week6/back2.tim
-
-# Week 7
-iso/week7/back.arc: iso/week7/back0.tim iso/week7/back1.tim iso/week7/back2.tim iso/week7/back3.tim
+iso/stages/week1/back.arc: iso/stages/week1/back0.tim iso/stages/week1/back1.tim
 
 # /v/ stages
-iso/vtown/back.arc: iso/vtown/t0.tim iso/vtown/t1.tim iso/vtown/t2.tim iso/vtown/m0.tim iso/vtown/m1.tim iso/vtown/m2.tim iso/vtown/g.tim iso/vtown/yot.tim iso/vtown/bait.tim
-iso/vtown/moot/hiro.arc: iso/vtown/moot/hiro0.tim iso/vtown/moot/hiro1.tim iso/vtown/moot/hiro2.tim
+iso/stages/vtown/back.arc: iso/stages/vtown/t0.tim iso/stages/vtown/t1.tim iso/stages/vtown/t2.tim iso/stages/vtown/m0.tim iso/stages/vtown/m1.tim iso/stages/vtown/m2.tim iso/stages/vtown/g.tim iso/stages/vtown/yot.tim iso/stages/vtown/bait.tim
+iso/stages/vtown/moot/hiro.arc: iso/stages/vtown/moot/hiro0.tim iso/stages/vtown/moot/hiro1.tim iso/stages/vtown/moot/hiro2.tim
 
 # Sneed's (formerly Chuck's)
-iso/simp/back.arc: iso/simp/shop.tim iso/simp/field.tim
+iso/stages/simp/back.arc: iso/stages/simp/shop.tim iso/stages/simp/field.tim
 
 # Valley
-iso/valley/back.arc: iso/valley/h0.tim iso/valley/h1.tim iso/valley/g0.tim iso/valley/g1.tim
+iso/stages/valley/back.arc: iso/stages/valley/h0.tim iso/stages/valley/h1.tim iso/stages/valley/g0.tim iso/stages/valley/g1.tim

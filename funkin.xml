@@ -44,7 +44,7 @@
 			<!-- Week 1 assets -->
 			<dir name = "week1">
 				<!-- Background art -->
-				<file name = "back.arc" type = "data" source = "iso/week1/back.arc"/>
+				<file name = "back.arc" type = "data" source = "iso/stages/week1/back.arc"/>
 				
 				<!-- Bopeebo charts -->
 				<file name = "1.1e.cht" type = "data" source = "iso/chart/vidyagaems-easy.json.cht"/>
@@ -89,59 +89,56 @@
 			</dir>
 
 			<dir name = "v">
-				<file name = "town.arc" type = "data" source = "iso/vtown/back.arc"/>
-				<file name = "hiro.arc" type = "data" source = "iso/vtown/moot/hiro.arc"/>
+				<file name = "town.arc" type = "data" source = "iso/stages/vtown/back.arc"/>
+				<file name = "hiro.arc" type = "data" source = "iso/stages/vtown/moot/hiro.arc"/>
 			</dir>
 
 			<dir name = "sneed">
-				<file name = "simp.arc" type = "data" source = "iso/simp/back.arc"/>
+				<file name = "simp.arc" type = "data" source = "iso/stages/simp/back.arc"/>
 			</dir>
 
 			<dir name = "mother2">
-				<file name = "shack.arc" type = "data" source = "iso/valley/back.arc"/>
+				<file name = "shack.arc" type = "data" source = "iso/stages/valley/back.arc"/>
 			</dir>
 			
 			<!-- Character assets -->
 			<dir name = "char">
 				<!-- Boyfriend assets -->
-				<file name = "bf.arc" type = "data" source = "iso/bf/main.arc"/>
-				<file name = "bfdead.arc" type = "data" source = "iso/bf/dead.arc"/>
-				<file name = "bfweeb.arc" type = "data" source = "iso/bf/weeb.arc"/>
+				<file name = "bf.arc" type = "data" source = "iso/characters/bf/main.arc"/>
+				<file name = "bfdead.arc" type = "data" source = "iso/characters/bf/dead.arc"/>
+				<file name = "bfweeb.arc" type = "data" source = "iso/characters/bf/weeb.arc"/>
 				
 				<!-- Dad assets -->
-				<file name = "dad.arc" type = "data" source = "iso/dad/main.arc"/>
+				<file name = "dad.arc" type = "data" source = "iso/characters/dad/main.arc"/>
 				
 				<!-- Girlfriend assets -->
-				<file name = "gf.arc" type = "data" source = "iso/gf/main.arc"/>
-				<file name = "gftut.arc" type = "data" source = "iso/gf/tut.arc"/>
-				<file name = "gfweeb.arc" type = "data" source = "iso/gf/weeb.arc"/>
-				<file name = "speaker.tim" type = "data" source = "iso/gf/speaker.tim"/>
-				
-				<!-- Clucky assets -->
-				<file name = "clucky.arc" type = "data" source = "iso/clucky/main.arc"/>
+				<file name = "gf.arc" type = "data" source = "iso/characters/gf/main.arc"/>
+				<file name = "gftut.arc" type = "data" source = "iso/characters/gf/tut.arc"/>
+				<file name = "gfweeb.arc" type = "data" source = "iso/characters/gf/weeb.arc"/>
+				<file name = "speaker.tim" type = "data" source = "iso/characters/gf/speaker.tim"/>
 
-				<file name = "bfv.arc" type = "data" source = "iso/bfv/main.arc"/>
-				<file name = "vrage.arc" type = "data" source = "iso/vrage/main.arc"/>
-				<file name = "cancer.arc" type = "data" source = "iso/cancer/main.arc"/>
+				<file name = "bfv.arc" type = "data" source = "iso/characters/bfv/main.arc"/>
+				<file name = "vrage.arc" type = "data" source = "iso/characters/vrage/main.arc"/>
+				<file name = "cancer.arc" type = "data" source = "iso/characters/cancer/main.arc"/>
 
-				<file name = "bfz.arc" type = "data" source = "iso/bfz/main.arc"/>
-				<file name = "hand.arc" type = "data" source = "iso/hand/main.arc"/>
-				<file name = "zord.arc" type = "data" source = "iso/zord/main.arc"/>
+				<file name = "bfz.arc" type = "data" source = "iso/characters/bfz/main.arc"/>
+				<file name = "hand.arc" type = "data" source = "iso/characters/hand/main.arc"/>
+				<file name = "zord.arc" type = "data" source = "iso/characters/zord/main.arc"/>
 
-				<file name = "homer.arc" type = "data" source = "iso/homer/main.arc"/>
-				<file name = "chuck.arc" type = "data" source = "iso/chuck/main.arc"/>
-				<file name = "sneed.arc" type = "data" source = "iso/sneed/main.arc"/>
+				<file name = "homer.arc" type = "data" source = "iso/characters/homer/main.arc"/>
+				<file name = "chuck.arc" type = "data" source = "iso/characters/chuck/main.arc"/>
+				<file name = "sneed.arc" type = "data" source = "iso/characters/sneed/main.arc"/>
 
 				<!-- Mega Man characters -->
-				<file name = "x.arc" type = "data" source = "iso/x/main.arc"/>
-				<file name = "green.arc" type = "data" source = "iso/green/main.arc"/>
-				<file name = "brear.tim" type = "data" source = "iso/green/brear.tim"/>
-				<file name = "bfront.tim" type = "data" source = "iso/green/bfront.tim"/>
-				<file name = "sblast.tim" type = "data" source = "iso/green/sblast.tim"/>
+				<file name = "x.arc" type = "data" source = "iso/characters/x/main.arc"/>
+				<file name = "green.arc" type = "data" source = "iso/characters/green/main.arc"/>
+				<file name = "brear.tim" type = "data" source = "iso/characters/green/brear.tim"/>
+				<file name = "bfront.tim" type = "data" source = "iso/characters/green/bfront.tim"/>
+				<file name = "sblast.tim" type = "data" source = "iso/characters/green/sblast.tim"/>
 
 				<!-- EarthBound characters -->
-				<file name = "porky.arc" type = "data" source = "iso/porky/main.arc"/>
-				<file name = "ness.arc" type = "data" source = "iso/ness/main.arc"/>
+				<file name = "porky.arc" type = "data" source = "iso/characters/porky/main.arc"/>
+				<file name = "ness.arc" type = "data" source = "iso/characters/ness/main.arc"/>
 			</dir>
 			
 			<!-- Music -->
